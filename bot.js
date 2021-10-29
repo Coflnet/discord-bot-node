@@ -1,6 +1,7 @@
 
 const { Client, Intents, ThreadChannel, Channel } = require('discord.js');
-
+const dotenv=require('dotenv')
+dotenv.config()
 const myIntents = new Intents();
 myIntents.add(Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES);
 
@@ -53,7 +54,7 @@ client.on('messageCreate', (message) => {
         reason: 'Needed a separate thread for moderation',
       })
   }  
-  let channel = client.channels.cache.find((channel) => channel.name === "884002032392998942"); 
+  channel = client.channels.cache.find((channel) => channel.name === "884002032392998942"); 
   
    if (channel) {
      channel.threads
@@ -64,7 +65,7 @@ client.on('messageCreate', (message) => {
      reason: 'help with bug',
    })
    }
-   let channel = client.channels.cache.find((channel) => channel.name === "869599942136717322");
+  channel = client.channels.cache.find((channel) => channel.name === "869599942136717322");
 
    if (channel) {
    channel.threads
@@ -83,4 +84,4 @@ client.on('messageCreate', (message) => {
 })
 
 
-client.login('OTAwMTc5ODY5NzA5NzYyNjMw.YW9j1Q.Ae7Y9DTO_Vo_Cw7Wsq59jy5zA4s').catch((e) => { console.error(e) });
+client.login(process.env.TOKEN).catch((e) => { console.error(e) });
