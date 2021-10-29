@@ -1,6 +1,6 @@
 
 const { Client, Intents, ThreadChannel, Channel } = require('discord.js');
-const dotenv=require('dotenv')
+const dotenv = require('dotenv')
 dotenv.config()
 const myIntents = new Intents();
 myIntents.add(Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES);
@@ -43,44 +43,35 @@ client.on('messageCreate', (message) => {
     message.channel.send("theres a discord link in @ThomasW profile");
   }
 
-  let channel = client.channels.cache.find((channel) => channel.name === "support");
-  
-  if (channel) {
-    channel.threads
+  if (message.channel.name === "support") {
+    message.channel.threads
       .create({
-        name: 'support help',
+        name: 'Support Help',
         autoArchiveDuration: 1440,
         startMessage: message.id,
         reason: 'Needed a separate thread for moderation',
       })
-  }  
-  channel = client.channels.cache.find((channel) => channel.name === "884002032392998942"); 
-  
-   if (channel) {
-     channel.threads
-   .create({
-     name: 'Bug Help',
-     autoArchiveDuration: 1440,
-     startMessage: message.id,
-     reason: 'help with bug',
-   })
-   }
-  channel = client.channels.cache.find((channel) => channel.name === "869599942136717322");
+  }
 
-   if (channel) {
-   channel.threads
-   .create({
-   name: 'suggestion idea',
-   autoArchiveDuration: 1440,
-   startMessage: message.id,
-   reason: 'To help someone with there suggestion',
-   })
+  if (message.channel.name === "🐛bug-report") {
+    channel.threads
+      .create({
+        name: 'Bug Help',
+        autoArchiveDuration: 1440,
+        startMessage: message.id,
+        reason: 'help with bug',
+      })
+  }
 
-
-   }
-   
-  
-
+  if (message.channel.name === "suggestions") {
+    channel.threads
+      .create({
+        name: 'Suggestion Idea',
+        autoArchiveDuration: 1440,
+        startMessage: message.id,
+        reason: 'To help someone with their suggestion',
+      })
+  }
 })
 
 
