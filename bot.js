@@ -8,6 +8,10 @@ myIntents.add(Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intent
 
 const client = new Client({ intents: myIntents });
 
+const MessageTimes = [];
+
+
+
 client.on('messageCreate', (message) => {
 
     //if (message.channelId)
@@ -16,10 +20,15 @@ client.on('messageCreate', (message) => {
         return; // the bot wont respond to itself 
     }
 
+
+
     if (text.split(" ").length == 1) {
-        // only one word
-        return message.delete()
-    } else if (text.indexOf("@everyone") >= 0) {
+        if (new Date() - MessageTimes[message.author.id] < 10000) {
+            message.delete()
+        }
+        return MessageTimes[message.author.id] = new Date()
+    }
+    if (text.indexOf("@everyone") >= 0) {
         return message.delete()
     }
 
