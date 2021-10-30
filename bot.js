@@ -33,7 +33,7 @@ client.on('messageCreate', (message) => {
     }
 
     if (text.indexOf("mod") >= 0 && text.indexOf("bannable") >= 0) {
-        message.channel.send("The mod is not bannable\nhere is the source code if you wish to look at it https://github.com/Coflnet/HypixelSkyblock/tree/separation#get-startedusage");
+        message.channel.send("The mod is not bannable\nhere is the source code if you wish to look at it https://github.com/Coflnet/skyblockmod");
     }
     if (text.indexOf("mod") >= 0 && text.indexOf("download") >= 0) {
         message.channel.send("you can download the mod in the channel labled\n <890682907889373257>")
