@@ -36,7 +36,7 @@ client.on('messageCreate', (message) => {
         message.channel.send("The mod is not bannable\nhere is the source code if you wish to look at it https://github.com/Coflnet/HypixelSkyblock/tree/separation#get-startedusage");
     }
     if (text.indexOf("mod") >= 0 && text.indexOf("download") >= 0) {
-        message.channel.send("you can download the mod in the channel labled\n <#902240719937368104>")
+        message.channel.send("you can download the mod in the channel labled\n <890682907889373257>")
     }
     if (text.indexOf("should") >= 0 && text.indexOf("buy") >= 0 && text.indexOf("premium") >= 0) {
         message.channel.send("no dont buy\nunless you like the benifits listed on https://sky.coflnet.com/premium");
@@ -45,12 +45,19 @@ client.on('messageCreate', (message) => {
         message.channel.send("it uses medium price which means it runs on statistics aka the average price of said item");
     }
     if (text.indexOf("mod") >= 0 && text.indexOf("free") >= 0) {
-        message.channel.send("the mod is free to use for free and paid version, you can download it in mod-releases");
+        message.channel.send("the mod is free to use for free and paid version, you can download it in\n <890682907889373257>");
     }
     if (text.indexOf("whats") >= 0 && text.indexOf("tfm") >= 0) {
         message.channel.send("theres a discord link in @ThomasW profile");
     }
-
+    if (text.indexOf("how") >= 0 && text.indexOf("get") >= 0 && text.indexOf("premium") >= 0){
+        message.channel.send("no dont buy\nunless you like the benifits listed on https://sky.coflnet.com/premium");
+    }
+   
+    if (text.indexOf("how") >= 0 && text.indexOf("buy") >= 0 && text.indexOf("premium") >= 0){
+        message.channel.send("no dont buy\nunless you like the benifits listed on https://sky.coflnet.com/premium");
+    }
+    
     if (message.channel.id === process.env.CHANNEL_ID_SUPPORT) {
         message.channel.threads
             .create({
