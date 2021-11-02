@@ -51,7 +51,7 @@ const MessageTimes = [];
         message.channel.send("the mod is free to use for free and paid version, you can download it in\n <890682907889373257>");
     }
     if (text.indexOf("whats") >= 0 && text.indexOf("tfm") >= 0) {
-        message.channel.send("theres a discord link in @ThomasW profile");
+        message.channel.send("theres a discord link in <@230778630597246983>'s profile");
     }
     if (text.indexOf("how") >= 0 && text.indexOf("get") >= 0 && text.indexOf("premium") >= 0){
         message.channel.send("no dont buy\nunless you like the benifits listed on https://sky.coflnet.com/premium");
