@@ -36,35 +36,35 @@ const MessageTimes = [];
     }
 
     if (text.indexOf("mod") >= 0 && text.indexOf("bannable") >= 0) {
-        message.channel.send("The mod its self is not bannable but the hotkey to open the action is 'bannable' so use the hot key at your own risk \nhere is the source code if you wish to look at it https://github.com/Coflnet/skyblockmod");
+        // message.channel.send("The mod its self is not bannable but the hotkey to open the action is 'bannable' so use the hot key at your own risk \nhere is the source code if you wish to look at it https://github.com/Coflnet/skyblockmod");
     }
     if (text.indexOf("mod") >= 0 && text.indexOf("download") >= 0) {
-        message.channel.send("you can download the mod in the channel labled\n <890682907889373257>")
+        // message.channel.send("you can download the mod in the channel labled\n <890682907889373257>")
     }
     if (text.indexOf("should") >= 0 && text.indexOf("buy") >= 0 && text.indexOf("premium") >= 0) {
-        message.channel.send("no dont buy\nunless you like the benifits listed on https://sky.coflnet.com/premium");
+        // message.channel.send("no dont buy\nunless you like the benifits listed on https://sky.coflnet.com/premium");
     }
     if (text.indexOf("doesnt") >= 0 && text.indexOf("make") >= 0 && text.indexOf("money") >= 0) {
-        message.channel.send("it uses medium price which means it runs on statistics aka the average price of said item");
+        // message.channel.send("it uses medium price which means it runs on statistics aka the average price of said item");
     }
     if (text.indexOf("mod") >= 0 && text.indexOf("free") >= 0) {
-        message.channel.send("the mod is free to use for free and paid version, you can download it in\n <890682907889373257>");
+        // message.channel.send("the mod is free to use for free and paid version, you can download it in\n <890682907889373257>");
     }
     if (text.indexOf("whats") >= 0 && text.indexOf("tfm") >= 0) {
-        message.channel.send("theres a discord link in <@230778630597246983>'s profile");
+        // message.channel.send("theres a discord link in <@230778630597246983>'s profile");
     }
     if (text.indexOf("how") >= 0 && text.indexOf("get") >= 0 && text.indexOf("premium") >= 0){
-        message.channel.send("no dont buy\nunless you like the benifits listed on https://sky.coflnet.com/premium");
+        // message.channel.send("no dont buy\nunless you like the benifits listed on https://sky.coflnet.com/premium");
     }
    
     if (text.indexOf("how") >= 0 && text.indexOf("buy") >= 0 && text.indexOf("premium") >= 0){
-        message.channel.send("no dont buy\nunless you like the benifits listed on https://sky.coflnet.com/premium");
+        // message.channel.send("no dont buy\nunless you like the benifits listed on https://sky.coflnet.com/premium");
     }
     if (text.indexOf("mod") >= 0 && text.indexOf("safe") >= 0){
-        message.channel.send("The mod its self is not bannable but the hotkey to open the action is 'bannable' so use the hot key at your own risk \nhere is the source code if you wish to look at it https://github.com/Coflnet/skyblockmod");
+        // message.channel.send("The mod its self is not bannable but the hotkey to open the action is 'bannable' so use the hot key at your own risk \nhere is the source code if you wish to look at it https://github.com/Coflnet/skyblockmod");
     }
     if (text.indexOf("mod") >= 0 && text.indexOf("virus") >= 0){
-        message.channel.send("The mod its self is not bannable but the hotkey to open the action is 'bannable' so use the hot key at your own risk \nhere is the source code if you wish to look at it https://github.com/Coflnet/skyblockmod");
+        // message.channel.send("The mod its self is not bannable but the hotkey to open the action is 'bannable' so use the hot key at your own risk \nhere is the source code if you wish to look at it https://github.com/Coflnet/skyblockmod");
     }
     
     if (message.channel.id === process.env.CHANNEL_ID_SUPPORT) {
