@@ -1,0 +1,139 @@
+[
+    {
+        "question": [
+            "whats",
+            "tfm"
+        ],
+        "blacklist": [
+            "where",
+            "buy",
+            "if"
+        ],
+        "answer": "there is a discord link in <@230778630597246983> "
+    },
+    {
+        "question": [
+            "price",
+            "paid"
+        ],
+        "blacklist": [
+            "whats",
+            "much"
+        ],
+        "answer": "Just download https://www.chattriggers.com/ and ingame type /ct import pricepaid"
+    },
+    {
+        "question": [
+            "mod",
+            "download"
+        ],
+        "blacklist": [
+            "just",
+            "dont",
+            "my"
+        ],
+        "answer": "you can download the mod in the channel labled\n <890682907889373257>"
+    },
+    {
+        "question": [
+            "how",
+            "buy",
+            "premium"
+        ],
+        "blacklist": [
+            "you",
+            "me",
+            "worth"
+        ],
+        "answer": "sky.coflnet.com/premium"
+    },
+    {
+        "question": [
+            "get",
+            "buy",
+            "premium"
+        ],
+        "blacklist": [
+            "you",
+            "me",
+            "worth"
+        ],
+        "answer": "sky.coflnet.com/premium"
+    },
+    {
+        "question": [
+            "mod",
+            "virus"
+        ],
+        "blacklist":[
+            "doesnt",
+            "which",
+            "if",
+            "isnt"
+        ],
+        "answer": "The mod has no harmful intentions. You can check the code yourself on github: https://github.com/Coflnet/SkyblockMod"
+    },
+    {
+        "question": [
+            "doesnt",
+            "make",
+            "money"
+        ],
+        "blacklist":[
+            "that",
+            "which",
+            "nec",
+            "working",
+            "farming",
+            "slayers",
+            "revs",
+            "eman",
+            "enchanting",
+            "tfm",
+            "grinding",
+            "new",
+            "bz",
+            "method"
+        ],
+        "answer": "It uses similar auctions to calculate the median price. Depending on the sell volume of an item some flips may indeed take a while to sell."
+    },
+    {
+        "question": [
+            "mod",
+            "free"
+        ],
+        "blacklist":[
+            "nec",
+            "not enough coins",
+            "that"
+        ],
+        "answer": "the mod is free to use for free and paid version, you can download it in\n <890682907889373257>"
+    },
+    {
+        "question": [
+            "should",
+            "buy",
+            "premium"
+        ],
+        "blacklist":[
+            "you",
+            "just",
+            "probly",
+            "probably"
+        ],
+        "answer": "only buy if you like the benifits listed on https://sky.coflnet.com/premium"
+    },
+    {
+        "question": [
+            "mod",
+            "bannable"
+        ],
+        "blacklist":[
+            "doesnt",
+            "which",
+            "if",
+            "isnt"
+        ],
+        "answer": "The mod has no harmful intentions. You can check the code yourself on github: https://github.com/Coflnet/SkyblockMod"
+    }
+]
