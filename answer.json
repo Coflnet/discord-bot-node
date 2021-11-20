@@ -9,18 +9,20 @@
             "buy",
             "if"
         ],
-        "answer": "there is a discord link in <@230778630597246983> "
+        "answer": "There is a discord link in <@230778630597246983>."
     },
-    {
+     {
         "question": [
             "price",
             "paid"
         ],
         "blacklist": [
             "whats",
-            "much"
+            "much",
+            "you",
+            "i"
         ],
-        "answer": "Just download https://www.chattriggers.com/ and ingame type /ct import pricepaid"
+        "answer": "Just download https://www.chattriggers.com/ and ingame type /ct import pricepaid."
     },
     {
         "question": [
@@ -32,7 +34,7 @@
             "dont",
             "my"
         ],
-        "answer": "you can download the mod in the channel labled\n <890682907889373257>"
+        "answer": "You can download the mod in the channel labled\n <890682907889373257>."
     },
     {
         "question": [
@@ -41,11 +43,10 @@
             "premium"
         ],
         "blacklist": [
-            "you",
             "me",
             "worth"
         ],
-        "answer": "sky.coflnet.com/premium"
+        "answer": "sky.coflnet.com/premium."
     },
     {
         "question": [
@@ -58,7 +59,7 @@
             "me",
             "worth"
         ],
-        "answer": "sky.coflnet.com/premium"
+        "answer": "sky.coflnet.com/premium."
     },
     {
         "question": [
@@ -71,7 +72,7 @@
             "if",
             "isnt"
         ],
-        "answer": "The mod has no harmful intentions. You can check the code yourself on github: https://github.com/Coflnet/SkyblockMod"
+        "answer": "The mod has no harmful intentions. You can check the code yourself on github: https://github.com/Coflnet/SkyblockMod."
     },
     {
         "question": [
@@ -107,7 +108,7 @@
             "not enough coins",
             "that"
         ],
-        "answer": "the mod is free to use for free and paid version, you can download it in\n <890682907889373257>"
+        "answer": "The mod is free to use for free and paid version, you can download it in\n <890682907889373257>."
     },
     {
         "question": [
@@ -121,7 +122,7 @@
             "probly",
             "probably"
         ],
-        "answer": "only buy if you like the benifits listed on https://sky.coflnet.com/premium"
+        "answer": "Only buy if you like the benifits listed on https://sky.coflnet.com/premium."
     },
     {
         "question": [
@@ -134,6 +135,6 @@
             "if",
             "isnt"
         ],
-        "answer": "The mod has no harmful intentions. You can check the code yourself on github: https://github.com/Coflnet/SkyblockMod"
+        "answer": "The mod has no harmful intentions. You can check the code yourself on github: https://github.com/Coflnet/SkyblockMod."
     }
 ]
