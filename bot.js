@@ -15,7 +15,6 @@ const newThread = [];
 
 
 
-
 client.on('messageCreate', (message) => {
     var text = message.content.toLowerCase();
     if (message.content === '') {
@@ -101,9 +100,9 @@ function getResponseToQuestion(question) {
         let found = answer.question.every(questionWord => question.indexOf(questionWord) !== -1);
         if (found) {
             
-                client.channels.cache.get(process.env.REPLY_CHANNEL_ID).send(String((answer.answer)));
+                //client.channels.cache.get(process.env.REPLY_CHANNEL_ID).send(String((answer.answer)));
             
-            client.channels.cache.get(process.env.REPLY_CHANNEL_ID).send(String((question)));
+            //client.channels.cache.get(process.env.REPLY_CHANNEL_ID).send(String((question)));
 
             return answer.answer;
         }
@@ -111,4 +110,5 @@ function getResponseToQuestion(question) {
     }
 }
 
+ 
 client.login(process.env.TOKEN).catch((e) => { console.error(e) });
