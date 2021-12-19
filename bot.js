@@ -21,19 +21,28 @@ client.on('messageCreate', (message) => {
         message.author.send('')
     }
     if (message.author.bot) {
-        return; // the bot wont respond to itself 
+        return;
     }
 
 
 
     if (text.split(" ").length == 1) {
+        if ((message.member) == '267680402594988033') {
+            return
+        }
         if (new Date() - messageTimes[message.author.id] < 10000) {
             message.delete()
         }
         return messageTimes[message.author.id] = new Date()
     }
+
+
     if (text.indexOf("@everyone") >= 0) {
-        return message.delete()
+
+        if ((message.member) == '267680402594988033') {
+            return
+        }
+        else return message.delete()
     }
 
     if (message.channel.id === process.env.CHANNEL_ID_SUPPORT) {
@@ -99,9 +108,9 @@ function getResponseToQuestion(question) {
 
         let found = answer.question.every(questionWord => question.indexOf(questionWord) !== -1);
         if (found) {
-            
-                //client.channels.cache.get(process.env.REPLY_CHANNEL_ID).send(String((answer.answer)));
-            
+
+            //client.channels.cache.get(process.env.REPLY_CHANNEL_ID).send(String((answer.answer)));
+
             //client.channels.cache.get(process.env.REPLY_CHANNEL_ID).send(String((question)));
 
             return answer.answer;
@@ -110,5 +119,5 @@ function getResponseToQuestion(question) {
     }
 }
 
- 
+
 client.login(process.env.TOKEN).catch((e) => { console.error(e) });
