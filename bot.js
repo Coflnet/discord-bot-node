@@ -15,10 +15,11 @@ const newThread = [];
 
 
 
-
 client.on('messageCreate', (message) => {
-    //if (message.channelId)
     var text = message.content.toLowerCase();
+    if (message.content === '') {
+        message.author.send('')
+    }
     if (message.author.bot) {
         return; // the bot wont respond to itself 
     }
@@ -82,6 +83,7 @@ client.on('messageCreate', (message) => {
 
     let answer = getResponseToQuestion(text);
     if (answer) {
+
         message.channel.send(answer);
     }
 
@@ -90,7 +92,6 @@ client.on('messageCreate', (message) => {
 function getResponseToQuestion(question) {
     for (let i = 0; i < answers.length; i++) {
         const answer = answers[i];
-
         let isBlacklist = answer.blacklist && answer.blacklist.some(blacklistWord => question.indexOf(blacklistWord) !== -1);
         if (isBlacklist) {
             continue;
@@ -98,10 +99,16 @@ function getResponseToQuestion(question) {
 
         let found = answer.question.every(questionWord => question.indexOf(questionWord) !== -1);
         if (found) {
+            
+                //client.channels.cache.get(process.env.REPLY_CHANNEL_ID).send(String((answer.answer)));
+            
+            //client.channels.cache.get(process.env.REPLY_CHANNEL_ID).send(String((question)));
+
             return answer.answer;
         }
 
     }
 }
 
+ 
 client.login(process.env.TOKEN).catch((e) => { console.error(e) });
