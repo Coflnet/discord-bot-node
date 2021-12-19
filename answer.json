@@ -135,5 +135,49 @@
             "isnt"
         ],
         "answer": ":point_right: The mod has no harmful intentions. You can check the code yourself on github: https://github.com/Coflnet/SkyblockMod"
-    }
+    },
+    {
+        "question": [
+            "whats",
+            "ferrum"
+        ],
+        "blacklist":[
+            "owner",
+            "endorphin",
+            "autobuy",
+            "isnt",
+            "public",
+            "tfm",
+            
+        ],
+        "answer": "It is a private flipper Made by <@415201450336059392>"
+    },
+    {
+        "question": [
+            "what",
+            "ferrum"
+        ],
+        "blacklist":[
+            "owner",
+            "endorphin",
+            "autobuy",
+            "isnt",
+            "public",
+            "tfm"
+            
+        ],
+        "answer": "It is a private flipper Made by <@415201450336059392>"
+    },
+    {
+        "question": [
+            "what",
+            "tfm"
+        ],
+        "blacklist": [
+            "where",
+            "buy",
+            "if"
+        ],
+        "answer": ":point_right: There is a discord link in <@230778630597246983>"
+     }
 ]
