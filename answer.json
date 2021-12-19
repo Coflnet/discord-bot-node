@@ -17,7 +17,6 @@
             "paid"
         ],
         "blacklist": [
-            "whats",
             "much",
             "you",
             "i"
@@ -72,7 +71,7 @@
             "if",
             "isnt"
         ],
-        "answer": "The mod has no harmful intentions. You can check the code yourself on github :point_right: https://github.com/Coflnet/SkyblockMod ."
+        "answer": "The mod has no harmful intentions. You can check the code yourself on github :point_right: https://github.com/Coflnet/SkyblockMod"
     },
     {
         "question": [
@@ -108,7 +107,7 @@
             "not enough coins",
             "that"
         ],
-        "answer": "The mod is free to use for free and paid version, you can download it in :point_right: <#890682907889373257> ."
+        "answer": ":point_right: The mod is free to use for free and paid version, you can download it in :point_right: <#890682907889373257>"
     },
     {
         "question": [
@@ -122,12 +121,48 @@
             "probly",
             "probably"
         ],
-        "answer": "Only buy if you like the benifits listed on :point_right: https://sky.coflnet.com/premium ."
+        "answer": "Only buy if you like the benifits listed on :point_right: https://sky.coflnet.com/premium"
     },
     {
         "question": [
             "mod",
             "bannable"
+        ],
+        "blacklist":[
+            "doesnt",
+            "which",
+            "if",
+            "isnt"
+        ],
+        "answer": "In a way the keybind to open auctions is in a grey zone(use at your own risk), but if you just press the chat messages you will be fine"
+    },
+    {
+        "question": [
+            "whats",
+            "ferrum"
+        ],
+        "blacklist":[
+            "uses",
+            "thats",
+            "of",
+            "autobuy",
+            "public",
+            "endorphin",
+            "using",
+            "cofl slower",
+            "he",
+            "tfm",
+            "should",
+            "auto buy",
+            "link",
+            "slower"
+        ],
+        "answer": "It is a private flipper made by endorphin"
+    },
+    {
+        "question": [
+            "mod",
+            "rat"
         ],
         "blacklist":[
             "doesnt",
