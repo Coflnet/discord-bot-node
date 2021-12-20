@@ -23,16 +23,16 @@ client.on('messageCreate', (message) => {
     if (message.author.bot) {
         return;
     }
-
+        //whitelists channel
     if (text.split(" ").length == 1) {
         if ((message.member) == '267680402594988033') {
             return
-            //whitelists akwav
+            
         }
-
+            //whitelists channel
         if ((message.channel) == client.channels.cache.get('920400419400863774')) {
             return
-            //whitelists channel
+            
         }
 
         if (new Date() - messageTimes[message.author.id] < 10000) {
@@ -43,10 +43,10 @@ client.on('messageCreate', (message) => {
 
 
     if (text.indexOf("@everyone") >= 0) {
-
+        //whitelists akwav
         if ((message.member) == '267680402594988033') {
             return
-            //whitelists akwav
+            
         }
         else {
             return message.delete()
