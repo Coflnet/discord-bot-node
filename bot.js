@@ -23,13 +23,13 @@ client.on('messageCreate', (message) => {
     if (message.author.bot) {
         return;
     }
-        //whitelists channel
+    //whitelists channel
     if (text.split(" ").length == 1) {
         if ((message.member) == '267680402594988033') {
             return
             
         }
-            //whitelists channel
+        //whitelists channel
         if ((message.channel) == client.channels.cache.get('920400419400863774')) {
             return
             
