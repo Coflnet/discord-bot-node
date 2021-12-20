@@ -19,7 +19,6 @@ client.on('messageCreate', (message) => {
 
     var text = message.content.toLowerCase();
     if (message.content === '') {
-        message.author.send(' ')
     }
     if (message.author.bot) {
         return;
