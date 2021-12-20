@@ -23,33 +23,29 @@ client.on('messageCreate', (message) => {
     if (message.author.bot) {
         return;
     }
-    // whitelists channel
-    if (text.split(" ").length == 1) {
-        if ((message.member) == '267680402594988033') {
-            return
 
+    if (text.split(" ").length == 1) {
+        if (isWhitelistMember(message.member)) {
+            return;
         }
+
         // whitelists channel
         if ((message.channel) == client.channels.cache.get('920400419400863774')) {
-            return
-
+            return;
         }
 
         if (new Date() - messageTimes[message.author.id] < 10000) {
-            message.delete()
+            message.delete();
         }
-        return messageTimes[message.author.id] = new Date()
+        return messageTimes[message.author.id] = new Date();
     }
 
-
     if (text.indexOf("@everyone") >= 0) {
-        // whitelists akwav
-        if ((message.member) == '267680402594988033') {
-            return
 
-        }
-        else {
-            return message.delete()
+        if (isWhitelistMember(message.member)) {
+            return;
+        } else {
+            return message.delete();
         }
     }
 
@@ -105,6 +101,14 @@ client.on('messageCreate', (message) => {
     }
 
 })
+
+function isWhitelistMember(member) {
+    // whitelists akwav because its pretty
+    if (member === '267680402594988033') {
+        return true;
+    }
+    return false;
+}
 
 function getResponseToQuestion(question) {
     for (let i = 0; i < answers.length; i++) {
