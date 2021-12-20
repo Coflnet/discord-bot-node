@@ -16,37 +16,34 @@ const newThread = [];
 
 
 client.on('messageCreate', (message) => {
+
     var text = message.content.toLowerCase();
     if (message.content === '') {
-        message.author.send('')
+        message.author.send(' ')
     }
     if (message.author.bot) {
         return;
     }
-
     if (text.split(" ").length == 1) {
-        if (isWhitelistMember(message.member)) {
+        if ((message.member) == '267680402594988033') {
             return;
         }
-
         // whitelists channel
         if ((message.channel) == client.channels.cache.get('920400419400863774')) {
             return;
         }
-
         if (new Date() - messageTimes[message.author.id] < 10000) {
             message.delete();
         }
         return messageTimes[message.author.id] = new Date();
     }
-
     if (text.indexOf("@everyone") >= 0) {
-
-        if (isWhitelistMember(message.member)) {
+        if ((message.member) == '267680402594988033') {
             return;
-        } else {
-            return message.delete();
         }
+    }
+    else {
+        return message.delete();
     }
 
     if (message.channel.id === process.env.CHANNEL_ID_SUPPORT) {
