@@ -11,13 +11,6 @@ const client = new Client({ intents: myIntents });
 
 const messageTimes = [];
 
-var giveAwayMakerTime;
-
-var giveAwayMakerPrem;
-
-const settingsForGiveaway = [];
-
-
 client.on('messageCreate', (message) => {
 
     var text = message.content.toLowerCase();
