@@ -15,26 +15,38 @@ const newThread = [];
 
 
 
-
 client.on('messageCreate', (message) => {
     var text = message.content.toLowerCase();
-    if (message.content === ''){
+    if (message.content === '') {
         message.author.send('')
     }
     if (message.author.bot) {
-        return; // the bot wont respond to itself 
+        return;
     }
-
-
 
     if (text.split(" ").length == 1) {
-        if (new Date() - messageTimes[message.author.id] < 10000) {
-            message.delete()
+        if (isWhitelistMember(message.member)) {
+            return;
         }
-        return messageTimes[message.author.id] = new Date()
+
+        // whitelists channel
+        if ((message.channel) == client.channels.cache.get('920400419400863774')) {
+            return;
+        }
+
+        if (new Date() - messageTimes[message.author.id] < 10000) {
+            message.delete();
+        }
+        return messageTimes[message.author.id] = new Date();
     }
+
     if (text.indexOf("@everyone") >= 0) {
-        return message.delete()
+
+        if (isWhitelistMember(message.member)) {
+            return;
+        } else {
+            return message.delete();
+        }
     }
 
     if (message.channel.id === process.env.CHANNEL_ID_SUPPORT) {
@@ -84,30 +96,40 @@ client.on('messageCreate', (message) => {
 
     let answer = getResponseToQuestion(text);
     if (answer) {
-        
+
         message.channel.send(answer);
     }
 
 })
 
+function isWhitelistMember(member) {
+    // whitelists akwav because its pretty
+    if (member === '267680402594988033') {
+        return true;
+    }
+    return false;
+}
+
 function getResponseToQuestion(question) {
     for (let i = 0; i < answers.length; i++) {
         const answer = answers[i];
-
         let isBlacklist = answer.blacklist && answer.blacklist.some(blacklistWord => question.indexOf(blacklistWord) !== -1);
         if (isBlacklist) {
             continue;
         }
-        
+
         let found = answer.question.every(questionWord => question.indexOf(questionWord) !== -1);
-        if (found) {{
-            client.channels.cache.get(process.env.REPLY_CHANNEL_ID).send(String((answer.answer)));
-        }
-        client.channels.cache.get(process.env.REPLY_CHANNEL_ID).send(String((question)));
-        
+        if (found) {
+
+            //client.channels.cache.get(process.env.REPLY_CHANNEL_ID).send(String((answer.answer)));
+
+            //client.channels.cache.get(process.env.REPLY_CHANNEL_ID).send(String((question)));
+
             return answer.answer;
         }
 
     }
 }
+
+
 client.login(process.env.TOKEN).catch((e) => { console.error(e) });
