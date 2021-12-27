@@ -11,37 +11,29 @@ const client = new Client({ intents: myIntents });
 
 const messageTimes = [];
 
-const newThread = [];
+var giveAwayMakerTime;
 
+var giveAwayMakerPrem;
+
+const settingsForGiveaway = [];
 
 
 client.on('messageCreate', (message) => {
 
     var text = message.content.toLowerCase();
-    if (message.content === '') {
-    }
     if (message.author.bot) {
         return;
     }
     if (text.split(" ").length == 1) {
-        if ((message.member) == '267680402594988033') {
-            return;
-        }
-        // whitelists channel
-        if ((message.channel) == client.channels.cache.get('920400419400863774')) {
-            return;
-        }
+
+
         if (new Date() - messageTimes[message.author.id] < 10000) {
+            message.author.send('Your message was was deleted due one word message spamming Please do not send 1 word messages')
             message.delete();
         }
-        return messageTimes[message.author.id] = new Date();
+        messageTimes[message.author.id] = new Date();
     }
     if (text.indexOf("@everyone") >= 0) {
-        if ((message.member) == '267680402594988033') {
-            return;
-        }
-    }
-    else {
         return message.delete();
     }
 
@@ -98,13 +90,6 @@ client.on('messageCreate', (message) => {
 
 })
 
-function isWhitelistMember(member) {
-    // whitelists akwav because its pretty
-    if (member === '267680402594988033') {
-        return true;
-    }
-    return false;
-}
 
 function getResponseToQuestion(question) {
     for (let i = 0; i < answers.length; i++) {

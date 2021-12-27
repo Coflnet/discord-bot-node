@@ -19,9 +19,9 @@
         "blacklist": [
             "much",
             "you",
-            "i"
+            "my"
         ],
-        "answer": ":point_right: Just download https://www.chattriggers.com/ and ingame type /ct import pricepaid"
+        "answer": ":point_right: Just download https://www.chattriggers.com/ and ingame type /ct import price paid"
     },
     {
         "question": [
@@ -31,9 +31,11 @@
         "blacklist": [
             "just",
             "dont",
-            "my"
+            "my",
+            "folder"
+            
         ],
-        "answer": ":point_right: You can download the mod in the channel labled\n <890682907889373257>"
+        "answer": ":point_right: You can download the mod in the channel labled\n <#890682907889373257>"
     },
     {
         "question": [
@@ -107,7 +109,7 @@
             "not enough coins",
             "that"
         ],
-        "answer": ":point_right:  The mod is free to use for free and paid version, you can download it in\n <890682907889373257>"
+        "answer": ":point_right:  The mod is free to use for free and paid version, you can download it in\n <#890682907889373257>"
     },
     {
         "question": [
