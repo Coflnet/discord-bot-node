@@ -21,7 +21,7 @@ client.on('messageCreate', (message) => {
 
 
         if (new Date() - messageTimes[message.author.id] < 10000) {
-            message.author.send('Your message was was deleted due one word message spamming Please do not send 1 word messages')
+            message.author.send('Your message was was deleted due one word message spamming. Please do not send 1 word messages')
             message.delete();
         }
         messageTimes[message.author.id] = new Date();
