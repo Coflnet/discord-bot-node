@@ -13,6 +13,18 @@ const messageTimes = [];
 
 client.on('messageCreate', (message) => {
 
+
+
+    let hour = new Date().getHours() 
+    if (hour > 23 && hour < 5){
+    if (message.author == (process.env.AKWAV)){
+        message.author.send("Please go to Sleep")
+    }
+}
+    
+
+
+
     var text = message.content.toLowerCase();
     if (message.author.bot) {
         return;
@@ -52,6 +64,7 @@ client.on('messageCreate', (message) => {
             startMessage: message.id,
             reason: 'help with bug',
         }).then(thread => {
+            thread.send("Thank you for making a ticket\nPlease state the below\n- What you did\n- What you entented to do\n- what happened (even better if you make a screenshot/video of it\n- What you expected\nTry to be as precise and complete as possible. (Its faster to read some duplicate text than to ask you something)\nIf you use the mod please also use /cofl report (optional message) to easily create a report.)");
             let answer = getResponseToQuestion(text);
             if (answer) {
                 thread.send(answer);
