@@ -1,4 +1,4 @@
-# Cofl bot
+# Coflnet bot
 
 ## Environment variables
 
