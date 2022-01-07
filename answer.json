@@ -10,8 +10,8 @@
             "if"
         ],
         "answer": ":point_right: There is a discord link in <@230778630597246983>"
-     },
-     {
+    },
+    {
         "question": [
             "price",
             "paid"
@@ -19,12 +19,19 @@
         "blacklist": [
             "much",
             "you",
-            "my"
+            "my",
+            "ingame",
+            "nice",
+            "thought",
+            "sell",
+            "called",
+            "ct"
         ],
-        "answer": ":point_right: Just download https://www.chattriggers.com/ and ingame type /ct import price paid"
+        "answer": ":point_right: Just download https://www.chattriggers.com/ and ingame type /ct import PricePaid"
     },
     {
         "question": [
+            "how",
             "mod",
             "download"
         ],
@@ -32,7 +39,10 @@
             "just",
             "dont",
             "my",
-            "folder"
+            "folder",
+            "today",
+            "i",
+            "downloaded"
         ],
         "answer": ":point_right: You can download the mod in the channel labled\n <#890682907889373257>"
     },
@@ -66,7 +76,7 @@
             "mod",
             "virus"
         ],
-        "blacklist":[
+        "blacklist": [
             "doesnt",
             "which",
             "if",
@@ -80,7 +90,7 @@
             "make",
             "money"
         ],
-        "blacklist":[
+        "blacklist": [
             "that",
             "which",
             "nec",
@@ -103,7 +113,7 @@
             "mod",
             "free"
         ],
-        "blacklist":[
+        "blacklist": [
             "nec",
             "not enough coins",
             "that"
@@ -116,7 +126,7 @@
             "buy",
             "premium"
         ],
-        "blacklist":[
+        "blacklist": [
             "you",
             "just",
             "probly",
@@ -129,7 +139,7 @@
             "mod",
             "bannable"
         ],
-        "blacklist":[
+        "blacklist": [
             "doesnt",
             "which",
             "if",
@@ -142,14 +152,13 @@
             "whats",
             "ferrum"
         ],
-        "blacklist":[
+        "blacklist": [
             "owner",
             "endorphin",
             "autobuy",
             "isnt",
             "public",
             "tfm"
-            
         ],
         "answer": "It is a private flipper Made by <@415201450336059392>"
     },
@@ -158,14 +167,13 @@
             "what",
             "ferrum"
         ],
-        "blacklist":[
+        "blacklist": [
             "owner",
             "endorphin",
             "autobuy",
             "isnt",
             "public",
             "tfm"
-            
         ],
         "answer": "It is a private flipper Made by <@415201450336059392>"
     },
@@ -180,6 +188,88 @@
             "if"
         ],
         "answer": ":point_right: There is a discord link in <@230778630597246983>"
-     }
-     
+    },
+    {
+        "question": [
+            "is",
+            "cofl",
+            "rat?"
+        ],
+        "blacklist": [
+            "doesnt",
+            "which",
+            "if",
+            "isnt",
+            "isn't",
+            "ratio"
+        ],
+        "answer": "No, Cofl is not ratted, you are welcome to decompile the mod from <#890682907889373257> and see for yourself."
+    },
+    {
+        "question": [
+            "is",
+            "cofl",
+            "ratted"
+        ],
+        "blacklist": [
+            "doesnt",
+            "which",
+            "if",
+            "isnt",
+            "isn't",
+            "ratio"
+        ],
+        "answer": "No, Cofl is not ratted, you are welcome to decompile the mod from <#890682907889373257> and see for yourself."
+    },
+    {
+        "question": [
+            "this",
+            "rat?"
+        ],
+        "blacklist": [
+            "doesnt",
+            "which",
+            "if",
+            "isnt",
+            "isn't",
+            "ratio",
+            "tfm",
+            "cofl",
+            "what"
+        ],
+        "answer": "No, Cofl is not ratted, you are welcome to decompile the mod from <#890682907889373257> and see for yourself."
+    },
+    {
+        "question": [
+            "is",
+            "this",
+            "ratted"
+        ],
+        "blacklist": [
+            "doesnt",
+            "which",
+            "if",
+            "isnt",
+            "isn't",
+            "ratio",
+            ""
+        ],
+        "answer": "No, Cofl is not ratted, you are welcome to decompile the mod from <#890682907889373257> and see for yourself."
+    },
+    {
+        "question": [
+            "is",
+            "cofl",
+            "virus"
+        ],
+        "blacklist": [
+            "doesnt",
+            "which",
+            "if",
+            "isnt",
+            "isn't",
+            "ratio"
+        ],
+        "answer": "No, Cofl is not a virus, you are welcome to decompile the mod from <#890682907889373257> and see for yourself."
+    }
 ]

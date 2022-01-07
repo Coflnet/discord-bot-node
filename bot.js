@@ -14,13 +14,13 @@ const messageTimes = [];
 client.on('messageCreate', (message) => {
 
 
-
-    let hour = new Date().getHours() 
-    if (hour > 23 && hour < 5){
-    if (message.author == (process.env.AKWAV)){
-        message.author.send("Please go to Sleep")
-    }
-}
+    //still needs to be fixed
+    //let hour = new Date().getHours() 
+    //if (hour > 23 && hour < 5){
+    //if (message.author == (process.env.AKWAV)){
+     //   message.author.send("Please go to sleep")
+    //}
+//}
     
 
 
