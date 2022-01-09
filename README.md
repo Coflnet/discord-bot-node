@@ -13,3 +13,4 @@ The ID of the support channel
 
 ### CHANNEL_ID_SUGGESTIONS
 The ID of the suggestions channel
+
