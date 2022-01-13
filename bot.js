@@ -6,25 +6,10 @@ myIntents.add(Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intent
 let answers = require('./answer.json');
 
 // Options to create a new thread
-
 const client = new Client({ intents: myIntents });
-
 const messageTimes = [];
 
 client.on('messageCreate', (message) => {
-
-
-    //still needs to be fixed
-    //let hour = new Date().getHours() 
-    //if (hour > 23 && hour < 5){
-    //if (message.author == (process.env.AKWAV)){
-     //   message.author.send("Please go to sleep")
-    //}
-//}
-    
-
-
-
     var text = message.content.toLowerCase();
     if (message.author.bot) {
         return;
@@ -41,7 +26,12 @@ client.on('messageCreate', (message) => {
     if (text.indexOf("@everyone") >= 0) {
         return message.delete();
     }
-
+    //tell akwav to sleep
+    let hour = new Date().getHours() 
+    if (hour >= 23 || hour <= 7){
+        if (message.author == (process.env.AKWAV))
+        message.author.send("Please go to Sleep")
+    }
     if (message.channel.id === process.env.CHANNEL_ID_SUPPORT) {
         message.channel.threads.create({
             name: 'Support Help',
