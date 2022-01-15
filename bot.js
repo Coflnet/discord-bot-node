@@ -10,7 +10,18 @@ let answers = require('./answer.json');
 const client = new Client({ intents: myIntents });
 
 const messageTimes = [];
-
+//checks for raids
+client.on('guildMemberAdd', async (joiningMember) => {
+    if ((joiningMember.user.username) == text.indexOf("free")) {
+        author.cache.get(process.env.TENTAMENS).send("WARNING RAID MAY HAVE BEEN SPOTTED WARNING")
+    } // only sends the message to tentamens
+    if ((joiningMember.user.username) == text.indexOf("money")) {
+        author.cache.get(process.env.TENTAMENS).send("WARNING RAID MAY HAVE BEEN SPOTTED WARNING")
+    }
+    if ((joiningMember.user.username) == text.indexOf("hub")) {
+        author.cache.get(process.env.TENTAMENS).send("WARNING RAID MAY HAVE BEEN SPOTTED WARNING")
+    }
+})
 client.on('messageCreate', (message) => {
 
     var text = message.content.toLowerCase();
