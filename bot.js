@@ -11,9 +11,17 @@ const client = new Client({ intents: myIntents });
 
 const messageTimes = [];
 
+
+const nitroRegex =  /(?=.*http)(?=.*nitro)/i;
+
+
 client.on('messageCreate', (message) => {
 
     var text = message.content.toLowerCase();
+    var nitroRegexr = text.match(nitroRegex);
+    if (nitroRegexr != null){
+	    message.delete();
+        }
     if (message.author.bot) {
         return;
     }
