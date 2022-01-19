@@ -55,7 +55,7 @@ function checkForThreadCreation(message) {
 }
 
 function checkForDelete(message) {
-    if (text.indexOf("@everyone") >= 0) {
+    if (message.content.toLowerCase().indexOf("@everyone") >= 0) {
         message.delete();
         return true;
     }
