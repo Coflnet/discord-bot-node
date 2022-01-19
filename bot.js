@@ -12,7 +12,7 @@ const client = new Client({ intents: myIntents });
 const messageTimes = [];
 
 
-const nitroRegex =  /(?=.*http)(?=.*nitro)/i;
+const nitroRegex =  /((.*http.*)(.*nitro.*))|((.*nitro.*)(.*http.*))/i;
 
 
 client.on('messageCreate', (message) => {
