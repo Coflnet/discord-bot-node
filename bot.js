@@ -42,8 +42,7 @@ client.on('messageCreate', (message) => {
         console.log(`answer: ${answer}`)
         message.channel.send(answer);
     }
-    })
-    
+})
 function checkForThreadCreation(message) {
     let text = message.content.toLowerCase();
     if (message.channel.id === process.env.CHANNEL_ID_SUPPORT) {
@@ -108,11 +107,8 @@ function getResponseToQuestion(question) {
         if (isBlacklist) {
             continue;
         }
-
         let found = answer.question.every(questionWord => question.indexOf(questionWord) !== -1);
         if (found) {
-            
-            
             return answer.answer;
         }
 
