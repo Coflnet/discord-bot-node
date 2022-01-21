@@ -42,10 +42,6 @@ client.on('messageCreate', (message) => {
         console.log(`answer: ${answer}`)
         message.channel.send(answer);
     }
-    if (message.content === ("C!hyperion")){
-        message.channel.send("average cost in embed more data on the page https://sky.coflnet.com/item/HYPERION?range=day&itemFilter=")
-    }
-
     })
     
 function checkForThreadCreation(message) {
