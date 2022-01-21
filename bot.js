@@ -38,10 +38,16 @@ client.on('messageCreate', (message) => {
 
     let answer = getResponseToQuestion(message.content.toLowerCase());
     if (answer) {
+        console.log(`message: ${message.content}`)
+        console.log(`answer: ${answer}`)
         message.channel.send(answer);
     }
+    if (message.content === ("C!hyperion")){
+        message.channel.send("average cost in embed more data on the page https://sky.coflnet.com/item/HYPERION?range=day&itemFilter=")
+    }
 
-
+    })
+    
 function checkForThreadCreation(message) {
     let text = message.content.toLowerCase();
     if (message.channel.id === process.env.CHANNEL_ID_SUPPORT) {
@@ -109,14 +115,14 @@ function getResponseToQuestion(question) {
 
         let found = answer.question.every(questionWord => question.indexOf(questionWord) !== -1);
         if (found) {
-            console.log(message.content)
-            console.log(answer)
+            
+            
             return answer.answer;
         }
 
     }
 }
-})
+
 /**
  * Tells Akwav to go to sleep
  */
