@@ -40,7 +40,7 @@ client.on('messageCreate', (message) => {
     if (answer) {
         message.channel.send(answer);
     }
-})
+
 
 function checkForThreadCreation(message) {
     let text = message.content.toLowerCase();
@@ -109,12 +109,14 @@ function getResponseToQuestion(question) {
 
         let found = answer.question.every(questionWord => question.indexOf(questionWord) !== -1);
         if (found) {
+            console.log(message.content)
+            console.log(answer)
             return answer.answer;
         }
 
     }
 }
-
+})
 /**
  * Tells Akwav to go to sleep
  */
