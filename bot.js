@@ -1,4 +1,5 @@
 const { Client, Intents, ThreadChannel, Channel } = require('discord.js');
+const fetch = require('cross-fetch')
 const dotenv = require('dotenv')
 dotenv.config()
 const myIntents = new Intents();
@@ -36,13 +37,55 @@ client.on('messageCreate', (message) => {
 
     checkForSpecialMessage(message);
 
+    checkForProfitCommand(message);
+
     let answer = getResponseToQuestion(message.content.toLowerCase());
     if (answer) {
         console.log(`message: ${message.content}`)
         console.log(`answer: ${answer}`)
         message.channel.send(answer);
     }
+
 })
+
+function checkForProfitCommand(message){
+    if (message.channel.id === '922237524989075476')
+    let split = text.split(' ');
+    if (split.length >= 2 && split[0] === "c!") {
+        fetch(`https://sky.coflnet.com/api/search/player/${split[1]}`).then(res => {
+            if (res.status === 500) {
+                message.channel.send("The name you provided was not found please check your spelling");
+                return null;
+            }
+            return res.json()
+        }).then(players => {
+            if (!players) {
+                return;
+            }
+            fetch(`https://sky.coflnet.com/api/flip/stats/player/${players[0].uuid}`).then(response => {
+                return response.json();
+            }).then(data => {
+                message.channel.send('your profit in the last 7 days is ' + formatToPriceToShorten(data.totalProfit, 0));
+            })
+        })
+    }
+}
+
+function formatToPriceToShorten(num, decimals) {
+    // Ensure number has max 3 significant digits (no rounding up can happen)
+    let i = Math.pow(10, Math.max(0, Math.log10(num) - 2));
+    num = num / i * i;
+
+    if (num >= 1_000_000_000)
+        return (num / 1_000_000_000).toFixed(decimals) + "B";
+    if (num >= 1_000_000)
+        return (num / 1_000_000).toFixed(decimals) + "M";
+    if (num >= 1_000)
+        return (num / 1_000).toFixed(decimals) + "k";
+
+    return num.toFixed(0)
+}
+
 function checkForThreadCreation(message) {
     let text = message.content.toLowerCase();
     if (message.channel.id === process.env.CHANNEL_ID_SUPPORT) {
@@ -64,6 +107,7 @@ function checkForThreadCreation(message) {
     }
     return false;
 }
+
 
 function checkForDelete(message) {
     if (message.content.toLowerCase().indexOf("@everyone") >= 0) {
