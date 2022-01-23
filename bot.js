@@ -7,7 +7,7 @@ const client = new Client({ intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLA
 const messageTimes = [];
 
 
-const nitroRegex = /((.*http.*)(.*nitro.*))|((.*nitro.*)(.*http.*))/i;
+const nitroRegex = /((.*http.*)(.*nitro.*))|((.*nitro.*)(.*http.*))|((.*http.*)(.*gift.*))|((.*gift.*)(.*http.*))/i;
 
 
 client.on('messageCreate', (message) => {
