@@ -1,5 +1,6 @@
-const { Client, Intents, ThreadChannel, Channel } = require('discord.js');
-const fetch = require('cross-fetch')
+const { Client, Intents, ThreadChannel, Channel, ClientUser, Interaction, Collection } = require('discord.js');
+const { SlashCommandBuilder } = require('@discordjs/builders');
+const fs = require('fs');
 const dotenv = require('dotenv')
 dotenv.config()
 const myIntents = new Intents();
@@ -10,9 +11,9 @@ let answers = require('./answer.json');
 const client = new Client({ intents: myIntents });
 const messageTimes = [];
 
-
 const nitroRegex = /((.*http.*)(.*nitro.*))|((.*nitro.*)(.*http.*))/i;
 
+client.commands = getClientCommands();
 
 client.on('messageCreate', (message) => {
 
@@ -48,42 +49,33 @@ client.on('messageCreate', (message) => {
 
 })
 
-function checkForProfitCommand(message){
-    if (message.channel.id === '922237524989075476')
-    let split = text.split(' ');
-    if (split.length >= 2 && split[0] === "c!") {
-        fetch(`https://sky.coflnet.com/api/search/player/${split[1]}`).then(res => {
-            if (res.status === 500) {
-                message.channel.send("The name you provided was not found please check your spelling");
-                return null;
-            }
-            return res.json()
-        }).then(players => {
-            if (!players) {
-                return;
-            }
-            fetch(`https://sky.coflnet.com/api/flip/stats/player/${players[0].uuid}`).then(response => {
-                return response.json();
-            }).then(data => {
-                message.channel.send('your profit in the last 7 days is ' + formatToPriceToShorten(data.totalProfit, 0));
-            })
-        })
+client.on('interactionCreate', async interaction => {
+
+    if (!interaction.isCommand()) return;
+    const command = client.commands.get(interaction.commandName);
+
+	if (!command) return;
+
+	try {
+		await command.execute(interaction);
+	} catch (error) {
+		console.error(error);
+		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+	}
+})
+
+function getClientCommands() {
+
+    let commands = new Collection();
+    const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+    for (const file of commandFiles) {
+        const command = require(`./commands/${file}`);
+        // Set a new item in the Collection
+        // With the key as the command name and the value as the exported module
+        commands.set(command.data.name, command);
     }
-}
-
-function formatToPriceToShorten(num, decimals) {
-    // Ensure number has max 3 significant digits (no rounding up can happen)
-    let i = Math.pow(10, Math.max(0, Math.log10(num) - 2));
-    num = num / i * i;
-
-    if (num >= 1_000_000_000)
-        return (num / 1_000_000_000).toFixed(decimals) + "B";
-    if (num >= 1_000_000)
-        return (num / 1_000_000).toFixed(decimals) + "M";
-    if (num >= 1_000)
-        return (num / 1_000).toFixed(decimals) + "k";
-
-    return num.toFixed(0)
+    return commands;
 }
 
 function checkForThreadCreation(message) {

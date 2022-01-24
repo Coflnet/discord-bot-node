@@ -1,12 +1,16 @@
 {
-    "name": "scratch-for-discord-bot",
+    "name": "discord-bot",
     "version": "1.0.0",
     "main": "bot.js",
     "scripts": {
-        "start": "node bot.js"
+        "start": "node bot.js",
+        "update-commands": "node updateCommands.js"
     },
     "dependencies": {
+        "@discordjs/builders": "^0.12.0",
+        "@discordjs/rest": "^0.3.0",
         "cross-fetch": "^3.1.5",
+        "discord-api-types": "^0.26.1",
         "discord.js": "^13.1.0",
         "dotenv": "^10.0.0",
         "easy-json-database": "^1.5.0"
