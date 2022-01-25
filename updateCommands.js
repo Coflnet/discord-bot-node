@@ -7,7 +7,6 @@ dotenv.config()
 const commands = [];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-// Place your client and guild ids here
 const clientId = process.env.CLIENT_ID;
 const guildId = process.env.GUILD_ID;
 
