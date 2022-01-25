@@ -1,5 +1,4 @@
-const { Client, Intents, ThreadChannel, Channel, ClientUser, Interaction, Collection } = require('discord.js');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { Client, Intents, Collection } = require('discord.js');
 const fs = require('fs');
 const dotenv = require('dotenv')
 dotenv.config()
@@ -8,7 +7,7 @@ myIntents.add(Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intent
 let answers = require('./answer.json');
 
 // Options to create a new thread
-const client = new Client({ intents: myIntents });
+const client = new Client({ intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const messageTimes = [];
 
 const nitroRegex = /((.*http.*)(.*nitro.*))|((.*nitro.*)(.*http.*))/i;
@@ -54,14 +53,14 @@ client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
     const command = client.commands.get(interaction.commandName);
 
-	if (!command) return;
+    if (!command) return;
 
-	try {
-		await command.execute(interaction);
-	} catch (error) {
-		console.error(error);
-		await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
-	}
+    try {
+        await command.execute(interaction);
+    } catch (error) {
+        console.error(error);
+        await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+    }
 })
 
 function getClientCommands() {
@@ -87,7 +86,7 @@ function checkForThreadCreation(message) {
 
     if (message.channel.id === process.env.CHANNEL_ID_BUGREPORT) {
         createAnswerThread(message, 'Bug Help', 'help with bug', thread => {
-            thread.send("Thank you for making a ticket\nPlease state the below\n- What you did\n- What you entented to do\n- what happened (even better if you make a screenshot/video of it\n- What you expected\nTry to be as precise and complete as possible. (Its faster to read some duplicate text than to ask you something)\nIf you use the mod please also use /cofl report (optional message) to easily create a report.)");
+            thread.send("Thank you for making a ticket\nPlease state the below\n- What you did\n- What you intended to do\n- what happened (even better if you take a screenshot/video of it\n- What you expected\nTry to be as precise and complete as possible. (Its faster to read some duplicate text than to ask you something)\nIf you use the mod please also use /cofl report (optional message) to easily create a report.)");
             sendAnswer(thread, text);
         });
         return true;
