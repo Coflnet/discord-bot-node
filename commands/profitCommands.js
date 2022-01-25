@@ -19,7 +19,7 @@ module.exports = {
             await interaction.reply({content: "The name you provided was not found please check your spelling",
                 ephemeral: isEphemeral});
         } else {
-            await interaction.reply("fetching data...")
+            await interaction.reply({content: "fetching data...", ephemeral: isEphemeral})
             let response = await fetch(`https://sky.coflnet.com/api/flip/stats/player/${playerResponse[0].uuid}`);
             let data = await response.json();
             await interaction.editReply((name) + ' has made ' + formatToPriceToShorten(data.totalProfit, 0) + " In the last 7 days")
