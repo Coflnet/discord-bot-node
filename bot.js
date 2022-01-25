@@ -37,8 +37,6 @@ client.on('messageCreate', (message) => {
 
     checkForSpecialMessage(message);
 
-    checkForProfitCommand(message);
-
     let answer = getResponseToQuestion(message.content.toLowerCase());
     if (answer) {
         console.log(`message: ${message.content}`)

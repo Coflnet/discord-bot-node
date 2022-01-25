@@ -20,7 +20,7 @@ module.exports = {
             await interaction.reply("fetching data...")
             let response = await fetch(`https://sky.coflnet.com/api/flip/stats/player/${playerResponse[0].uuid}`);
             let data = await response.json();
-            await interaction.editReply((name) + 'has made ' + formatToPriceToShorten(data.totalProfit, 0) + "In the last 7 days")
+            await interaction.editReply((name) + 'has made ' + formatToPriceToShorten(data.totalProfit, 0) + " " + "In the last 7 days")
         }
     }
 }
