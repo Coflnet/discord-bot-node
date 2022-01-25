@@ -23,5 +23,5 @@ The ID of the support channel
 ### CHANNEL_ID_SUGGESTIONS
 The ID of the suggestions channel
 
-
-
+### BOT_COMMANDS_ID
+The ID of the bot-commands channel
