@@ -10,7 +10,7 @@ let answers = require('./answer.json');
 const client = new Client({ intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const messageTimes = [];
 
-const nitroRegex = /((.*http.*)(.*nitro.*))|((.*nitro.*)(.*http.*))/i;
+const nitroRegex = /((.*http.*)(.*nitro.*))|((.*nitro.*)(.*http.*))|((.*http.*)(.*gift.*))|((.*gift.*)(.*http.*))/i;
 
 client.commands = getClientCommands();
 
