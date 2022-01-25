@@ -1,14 +1,18 @@
-const { Client, Intents, ThreadChannel, Channel } = require('discord.js');
-const dotenv = require('dotenv').config()
+const { Client, Intents, Collection } = require('discord.js');
+const fs = require('fs');
+const dotenv = require('dotenv')
+dotenv.config()
+const myIntents = new Intents();
+myIntents.add(Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES);
 let answers = require('./answer.json');
 
 // Options to create a new thread
 const client = new Client({ intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const messageTimes = [];
 
-
 const nitroRegex = /((.*http.*)(.*nitro.*))|((.*nitro.*)(.*http.*))|((.*http.*)(.*gift.*))|((.*gift.*)(.*http.*))/i;
 
+client.commands = getClientCommands();
 
 client.on('messageCreate', (message) => {
 
@@ -39,7 +43,38 @@ client.on('messageCreate', (message) => {
         console.log(`answer: ${answer}`)
         message.channel.send(answer);
     }
+
 })
+
+client.on('interactionCreate', async interaction => {
+
+    if (!interaction.isCommand()) return;
+    const command = client.commands.get(interaction.commandName);
+
+    if (!command) return;
+
+    try {
+        await command.execute(interaction);
+    } catch (error) {
+        console.error(error);
+        await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
+    }
+})
+
+function getClientCommands() {
+
+    let commands = new Collection();
+    const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+    for (const file of commandFiles) {
+        const command = require(`./commands/${file}`);
+        // Set a new item in the Collection
+        // With the key as the command name and the value as the exported module
+        commands.set(command.data.name, command);
+    }
+    return commands;
+}
+
 function checkForThreadCreation(message) {
     let text = message.content.toLowerCase();
     if (message.channel.id === process.env.CHANNEL_ID_SUPPORT) {
@@ -61,6 +96,7 @@ function checkForThreadCreation(message) {
     }
     return false;
 }
+
 
 function checkForDelete(message) {
     if (message.content.toLowerCase().indexOf("@everyone") >= 0) {
