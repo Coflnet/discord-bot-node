@@ -306,17 +306,6 @@
             "get"
         ],
         "answer": "If you want the flipper role please dm staff with proof/your email and they will give you the role."
-    },
-    {
-        "question": [
-            "can",
-            "get",
-            "server role"
-        ],
-        "blacklist": [
-            "dont",
-            "get"
-        ],
-        "answer": "If you want the flipper role please dm staff with proof/your email and they will give you the role."
     }
+    
 ]
