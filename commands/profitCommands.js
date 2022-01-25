@@ -10,14 +10,16 @@ module.exports = {
             .setDescription('the username of the player')
             .setRequired(true)
         ),
-    async execute(interaction) {
+    async execute(interaction, isEphemeral) {
         let name = interaction.options.getString('name');
         let res = await fetch(`https://sky.coflnet.com/api/search/player/${name}`);
         let playerResponse = await res.json();
         if (playerResponse.Slug === "player_not_found") {
-            await interaction.reply("The name you provided was not found please check your spelling");
+            // Sends using InteractionReplyOptions, making it ephemeral (only user can see) if isEphemeral is true
+            await interaction.reply({content: "The name you provided was not found please check your spelling",
+                ephemeral: isEphemeral});
         } else {
-            await interaction.reply("fetching data...")
+            await interaction.reply({content: "fetching data...", ephemeral: isEphemeral})
             let response = await fetch(`https://sky.coflnet.com/api/flip/stats/player/${playerResponse[0].uuid}`);
             let data = await response.json();
             await interaction.editReply((name) + ' has made ' + formatToPriceToShorten(data.totalProfit, 0) + " In the last 7 days")
