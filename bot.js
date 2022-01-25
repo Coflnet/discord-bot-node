@@ -47,7 +47,11 @@ client.on('messageCreate', (message) => {
 })
 
 client.on('interactionCreate', async interaction => {
-
+    if (interaction.channelId !== process.env.CHANNEL_ID_BOT_COMMANDS) {
+        let channel = await client.channels.fetch(process.env.CHANNEL_ID_BOT_COMMANDS);
+        channel.send(`<@${interaction.user.id}> please only use bot commands in this channel`);
+        return;
+    }
     if (!interaction.isCommand()) return;
     const command = client.commands.get(interaction.commandName);
 
