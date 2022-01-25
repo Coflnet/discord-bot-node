@@ -6,4 +6,4 @@ RUN npm ci
 
 COPY . .
 
-CMD npm run start
+CMD npm run update-commands && npm run start

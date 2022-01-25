@@ -56,7 +56,7 @@
             "me",
             "worth"
         ],
-        "answer": ":point_right:  <https://sky.coflnet.com/premium>"
+        "answer": ":point_right:  https://sky.coflnet.com/premium"
     },
     {
         "question": [
@@ -69,7 +69,7 @@
             "me",
             "worth"
         ],
-        "answer": ":point_right:  <https://sky.coflnet.com/premium>"
+        "answer": ":point_right:  https://sky.coflnet.com/premium"
     },
     {
         "question": [
@@ -82,7 +82,7 @@
             "if",
             "isnt"
         ],
-        "answer": ":point_right:  The mod has no harmful intentions. You can check the code yourself on github: <https://github.com/Coflnet/SkyblockMod>"
+        "answer": ":point_right:  The mod has no harmful intentions. You can check the code yourself on github: https://github.com/Coflnet/SkyblockMod"
     },
     {
         "question": [
@@ -132,7 +132,7 @@
             "probly",
             "probably"
         ],
-        "answer": ":point_right:  Only buy if you like the benifits listed on <https://sky.coflnet.com/premium>"
+        "answer": ":point_right:  Only buy if you like the benifits listed on https://sky.coflnet.com/premium"
     },
     {
         "question": [
@@ -145,7 +145,7 @@
             "if",
             "isnt"
         ],
-        "answer": ":point_right: The mod has no harmful intentions. You can check the code yourself on github: <https://github.com/Coflnet/SkyblockMod>"
+        "answer": ":point_right: The mod has no harmful intentions. You can check the code yourself on github: https://github.com/Coflnet/SkyblockMod"
     },
     {
         "question": [
@@ -270,5 +270,30 @@
             "ratio"
         ],
         "answer": "No, Cofl is not a virus, you are welcome to decompile the mod from <#890682907889373257> and see for yourself."
+    },
+    {
+        "question": [
+            "can",
+            "have",
+            "flipper role"
+        ],
+        "blacklist": [
+            "dont",
+            "get"
+        ],
+        "answer": "If you want the flipper role please dm staff with proof/your email and they will give you the role."
+    },
+    {
+        "question": [
+            "can",
+            "have",
+            "server role"
+        ],
+        "blacklist": [
+            "dont",
+            "get"
+        ],
+        "answer": "If you want the flipper role please dm staff with proof/your email and they will give you the role."
     }
+    
 ]
