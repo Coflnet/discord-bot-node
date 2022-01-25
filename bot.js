@@ -47,7 +47,7 @@ client.on('messageCreate', (message) => {
 })
 
 client.on('interactionCreate', async interaction => {
-    if (channel.id !== process.env.BOT_COMMANDS){
+    if (channel.id !== process.env.BOT_COMMANDS_ID){
         return
     }
     if (!interaction.isCommand()) return;
