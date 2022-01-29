@@ -12,6 +12,10 @@ module.exports = {
         ),
     async execute(interaction, isEphemeral) {
         let name = interaction.options.getString('name');
+        if (name.split(" ").length > 1) {
+            await interaction.reply("Please enter a valid username")
+            return
+        }
         let res = await fetch(`https://sky.coflnet.com/api/search/player/${name}`);
         let playerResponse = await res.json();
         if (playerResponse.Slug === "player_not_found") {
