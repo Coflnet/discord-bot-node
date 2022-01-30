@@ -1,4 +1,4 @@
-const { Client, Intents, Collection } = require('discord.js');
+const { Client, Intents, Collection} = require('discord.js');
 const fs = require('fs');
 const dotenv = require('dotenv')
 dotenv.config()
@@ -24,7 +24,7 @@ client.on('messageCreate', (message) => {
     if (message.author.bot) {
         return;
     }
-
+    
     let messageWasDeleted = checkForDelete(message);
     if (messageWasDeleted) {
         return;
@@ -83,6 +83,9 @@ function checkForThreadCreation(message) {
     let text = message.content.toLowerCase();
     if (message.channel.id === process.env.CHANNEL_ID_SUPPORT) {
         createAnswerThread(message, 'Support Help', 'Needed a separate thread for moderation', thread => { sendAnswer(thread, text) });
+        client.users.fetch(process.env.TENTAMENS_ID, false).then ((users) => {
+            users.send((message.author.username) + " Made a support ticket " + (message.content))
+        })
         return true;
     }
 
@@ -90,13 +93,20 @@ function checkForThreadCreation(message) {
         createAnswerThread(message, 'Bug Help', 'help with bug', thread => {
             thread.send("Thank you for making a ticket\nPlease state the below\n- What you did\n- What you intended to do\n- what happened (even better if you take a screenshot/video of it\n- What you expected\nTry to be as precise and complete as possible. (Its faster to read some duplicate text than to ask you something)\nIf you use the mod please also use /cofl report (optional message) to easily create a report.)");
             sendAnswer(thread, text);
+            client.users.fetch(process.env.TENTAMENS_ID, false).then ((users) => {
+                users.send((message.author.username) + " Made a bug report saying " + (message.content))
+            })
         });
         return true;
     }
 
     if (message.channel.id === process.env.CHANNEL_ID_SUGGESTIONS) {
         createAnswerThread(message, 'Suggestion Idea', 'To help someone with their suggestion', thread => { sendAnswer(thread, text) });
+        client.users.fetch(process.env.TENTAMENS_ID, false).then ((users) => {
+            users.send((message.author.username) + " Made a suggestion " + (message.content))
+        })
         return true;
+        
     }
     return false;
 }
