@@ -12,21 +12,21 @@ module.exports = {
                 .setDescription('the username of the player')
                 .setRequired(true)
         ),
-    async execute(interaction, isEphemeral) {
+    async execute(interaction) {
         let name = interaction.options.getString('name');
         if (name.split(" ").length > 1) {
-            await interaction.reply({ embeds: [playerNameNotFoundOrInValidEmbed()], ephemeral: isEphemeral })
+            await interaction.reply({ embeds: [playerNameNotFoundOrInValidEmbed()]})
             return
         }
         let res = await fetch(`https://sky.coflnet.com/api/search/player/${name}`);
         let playerResponse = await res.json();
         if (playerResponse.Slug === "player_not_found") {
-            await interaction.reply({ embeds: [playerNameNotFoundOrInValidEmbed()], ephemeral: isEphemeral })
+            await interaction.reply({ embeds: [playerNameNotFoundOrInValidEmbed()]})
         } else {
-            await interaction.reply({ embeds: [fetchingData(interaction)], ephemeral: isEphemeral })
+            await interaction.reply({ embeds: [fetchingData(interaction)]})
             let response = await fetch(`https://sky.coflnet.com/api/flip/stats/player/${playerResponse[0].uuid}`);
             let playerData = await response.json();
-            await interaction.editReply({ embeds: [profitEmbed(interaction, playerResponse, playerData, name)],  ephemeral: isEphemeral})
+            await interaction.editReply({ embeds: [profitEmbed(interaction, playerResponse, playerData, name)]})
         }
 
     }
