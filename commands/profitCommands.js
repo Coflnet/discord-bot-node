@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const fetch = require('cross-fetch');
 const { MessageEmbed } = require('discord.js');
+const embedColor = ('#0099ff')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -14,13 +15,13 @@ module.exports = {
     async execute(interaction) {
         let name = interaction.options.getString('name');
         if (name.split(" ").length > 1) {
-            await interaction.reply({ embeds: [playerNotFoundEmbed()] })
+            await interaction.reply({ embeds: [playerNameNotFoundOrInValidEmbed()] })
             return
         }
         let res = await fetch(`https://sky.coflnet.com/api/search/player/${name}`);
         let playerResponse = await res.json();
         if (playerResponse.Slug === "player_not_found") {
-            await interaction.reply({ embeds: [playerNotFoundEmbed()] })
+            await interaction.reply({ embeds: [playerNameNotFoundOrInValidEmbed()] })
         } else {
             await interaction.reply({ embeds: [fetchingData(interaction)] })
             let response = await fetch(`https://sky.coflnet.com/api/flip/stats/player/${playerResponse[0].uuid}`);
@@ -32,18 +33,18 @@ module.exports = {
 
 }
 
-function playerNotFoundEmbed() {
+function playerNameNotFoundOrInValidEmbed() {
     const embeded = new MessageEmbed()
-    .setColor('#0099ff')
-    .setAuthor('Error!')
-    .setDescription('The Name you entered was not found please check your spelling')
+        .setColor(embedColor)
+        .setAuthor('Error!')
+        .setDescription('The Name you entered was not found please check your spelling')
     return embeded
 }
 
 function profitEmbed(interaction, playerResponse, playerData, name) {
     const playerID = (interaction.member.user.id)
     const exampleEmbed = new MessageEmbed()
-        .setColor('#0099ff')
+        .setColor(embedColor)
         .setURL('https://discord.js.org/')
         .setAuthor('Flipping Profit')
         .setDescription("<@" + playerID + ">")
@@ -55,7 +56,7 @@ function profitEmbed(interaction, playerResponse, playerData, name) {
 
 function fetchingData(interaction) {
     const fetchingData = new MessageEmbed()
-        .setColor('#0099ff')
+        .setColor(embedColor)
         .setAuthor((String(interaction.member.user.tag)))
         .setDescription('Fetching data...')
     return fetchingData
