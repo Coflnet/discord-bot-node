@@ -46,18 +46,18 @@ client.commands = getClientCommands();
     })
 
     client.on('interactionCreate', async interaction => {
-        if (interaction.channelId !== process.env.CHANNEL_ID_BOT_COMMANDS) {
-            let channel = await client.channels.fetch(process.env.CHANNEL_ID_BOT_COMMANDS);
-            channel.send(`<@${interaction.user.id}> please only use bot commands in this channel`);
-            return;
-        }
+      // Make it ephemeral (only the user can see it) if it's not in bot commands channel
+    let isEphemeral = false;
+    if (interaction.channelId !== process.env.CHANNEL_ID_BOT_COMMANDS) {
+        isEphemeral = true;
+    }
         if (!interaction.isCommand()) return;
         const command = client.commands.get(interaction.commandName);
 
         if (!command) return;
 
         try {
-            await command.execute(interaction);
+            await command.execute(interaction, isEphemeral);
         } catch (error) {
             console.error(error);
             await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
