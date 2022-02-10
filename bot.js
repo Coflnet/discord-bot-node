@@ -46,10 +46,10 @@ client.on('messageCreate', (message) => {
 })
 
 client.on('interactionCreate', async interaction => {
-    // Make it ephemeral (only the user can see it) if it's not in bot commands channel
-    let isEphemeral = false;
     if (interaction.channelId !== process.env.CHANNEL_ID_BOT_COMMANDS) {
-        isEphemeral = true;
+        let channel = await client.channels.fetch(process.env.CHANNEL_ID_BOT_COMMANDS);
+        channel.send(`<@${interaction.user.id}> please only use bot commands in this channel`);
+        return;
     }
     if (!interaction.isCommand()) return;
     const command = client.commands.get(interaction.commandName);
@@ -60,7 +60,7 @@ client.on('interactionCreate', async interaction => {
         await command.execute(interaction);
     } catch (error) {
         console.error(error);
-        await interaction.reply({ content: 'There was an error while executing this command!'});
+        await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true});
     }
 })
 
@@ -96,7 +96,6 @@ function checkForThreadCreation(message) {
     if (message.channel.id === process.env.CHANNEL_ID_SUGGESTIONS) {
         createAnswerThread(message, 'Suggestion Idea', 'To help someone with their suggestion', thread => { sendAnswer(thread, text) });
         return true;
-
     }
     return false;
 }
@@ -158,7 +157,7 @@ function getResponseToQuestion(question) {
 function checkForSpecialMessage(message) {
     let hour = new Date().getHours()
     if (hour >= 2 || hour <= 7) {
-        if (message.author == (process.env.AKWAV)) {
+        if (message.author === 267680402594988033) {
             message.author.send("Please go to Sleep");
         }
     }

@@ -1,7 +1,11 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const fetch = require('cross-fetch');
 const { MessageEmbed } = require('discord.js');
-const embedColor = ('#0099ff')
+const dotenv = require('dotenv')
+dotenv.config()
+
+
+const COLOR_EMBEDED_MESSAGES = ('#0099ff')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,51 +19,48 @@ module.exports = {
     async execute(interaction) {
         let name = interaction.options.getString('name');
         if (name.split(" ").length > 1) {
-            await interaction.reply({ embeds: [playerNameNotFoundOrInValidEmbed()]})
-            return
+            return await replyPlayerNameNotFoundOrInvalidEmbed(interaction);
         }
-        let res = await fetch(`https://sky.coflnet.com/api/search/player/${name}`);
+        let res = await fetch(`${process.env.API_ENDPOINT}/search/player/${name}`);
         let playerResponse = await res.json();
         if (playerResponse.Slug === "player_not_found") {
-            await interaction.reply({ embeds: [playerNameNotFoundOrInValidEmbed()]})
+            return await replyPlayerNameNotFoundOrInvalidEmbed(interaction);
         } else {
-            await interaction.reply({ embeds: [fetchingData(interaction)]})
-            let response = await fetch(`https://sky.coflnet.com/api/flip/stats/player/${playerResponse[0].uuid}`);
+            await replyFetchingDataEmbed(interaction);
+            let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}`);
             let playerData = await response.json();
-            await interaction.editReply({ embeds: [profitEmbed(interaction, playerResponse, playerData, name)]})
+            return await replyProfitEmbed(interaction, playerResponse[0].uuid, name, playerData.totalProfit);
         }
-
     }
-
 }
 
-function playerNameNotFoundOrInValidEmbed() {
+async function replyPlayerNameNotFoundOrInvalidEmbed(interaction) {
     const embeded = new MessageEmbed()
-        .setColor(embedColor)
+        .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor('Error!')
         .setDescription('The Name you entered was not found please check your spelling')
-    return embeded
+    return interaction.reply({ embeds: [embeded]})
 }
 
-function profitEmbed(interaction, playerResponse, playerData, name) {
-    const playerID = (interaction.member.user.id)
+function replyFetchingDataEmbed(interaction) {
+    const fetchingData = new MessageEmbed()
+        .setColor(COLOR_EMBEDED_MESSAGES)
+        .setAuthor(interaction.member.user.tag)
+        .setDescription('Fetching data...')
+    return interaction.reply({ embeds: [fetchingData]})
+}
+
+async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit) {
+    const userID = (interaction.member.user.id)
     const exampleEmbed = new MessageEmbed()
-        .setColor(embedColor)
+        .setColor(COLOR_EMBEDED_MESSAGES)
         .setURL('https://discord.js.org/')
         .setAuthor('Flipping Profit')
-        .setDescription("<@" + playerID + ">")
-        .setThumbnail(String(`https://crafatar.com/renders/head/${playerResponse[0].uuid}`))
-        .addField((String(name)) + " has made", (String(formatToPriceToShorten(playerData.totalProfit, 0) + " in the last 7 days")), true)
+        .setDescription(`<@${userID}>`)
+        .setThumbnail(`https://crafatar.com/renders/head/${playerUUID}`)
+        .addField(`${playerName} has made ${formatToPriceToShorten(totalProfit, 0)} in the last 7 days`, true)
         .setTimestamp()
-    return exampleEmbed
-}
-
-function fetchingData(interaction) {
-    const fetchingData = new MessageEmbed()
-        .setColor(embedColor)
-        .setAuthor((String(interaction.member.user.tag)))
-        .setDescription('Fetching data...')
-    return fetchingData
+    return interaction.editReply({ embeds: [exampleEmbed]})
 }
 
 function formatToPriceToShorten(num, decimals) {
