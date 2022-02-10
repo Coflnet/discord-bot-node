@@ -25,3 +25,6 @@ The ID of the suggestions channel
 
 ### CHANNEL_ID_BOT_COMMANDS
 The ID of the bot-commands channel
+
+### API_ENDPOINT
+The Adress of the API-Endpoint
