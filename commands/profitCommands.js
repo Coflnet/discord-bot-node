@@ -29,7 +29,7 @@ module.exports = {
             await replyFetchingDataEmbed(interaction);
             let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}`);
             let playerData = await response.json();
-            return replyProfitEmbed(interaction, playerResponse[0].uuid, name, playerData.totalProfith);
+            return replyProfitEmbed(interaction, playerResponse[0].uuid, name, playerData.totalProfit);
         }
     }
 }
