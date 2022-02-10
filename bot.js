@@ -10,7 +10,7 @@ let answers = require('./answer.json');
 const client = new Client({ intents: [Intents.FLAGS.GUILD_PRESENCES, Intents.FLAGS.GUILD_MEMBERS, Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const messageTimes = [];
 
-const nitroRegex = /((.*http.*)(.*nitro.*))|((.*nitro.*)(.*http.*))/i;
+const nitroRegex = /((.*http.*)(.*nitro.*))|((.*nitro.*)(.*http.*))|((.*http.*)(.*gift.*))|((.*gift.*)(.*http.*))/i;
 
 client.commands = getClientCommands();
 
@@ -46,10 +46,10 @@ client.on('messageCreate', (message) => {
 })
 
 client.on('interactionCreate', async interaction => {
+    // Make it ephemeral (only the user can see it) if it's not in bot commands channel
+    let isEphemeral = false;
     if (interaction.channelId !== process.env.CHANNEL_ID_BOT_COMMANDS) {
-        let channel = await client.channels.fetch(process.env.CHANNEL_ID_BOT_COMMANDS);
-        channel.send(`<@${interaction.user.id}> please only use bot commands in this channel`);
-        return;
+        isEphemeral = true;
     }
     if (!interaction.isCommand()) return;
     const command = client.commands.get(interaction.commandName);
@@ -57,7 +57,7 @@ client.on('interactionCreate', async interaction => {
     if (!command) return;
 
     try {
-        await command.execute(interaction);
+        await command.execute(interaction, isEphemeral);
     } catch (error) {
         console.error(error);
         await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true});

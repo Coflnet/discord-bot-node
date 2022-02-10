@@ -16,38 +16,38 @@ module.exports = {
                 .setDescription('the username of the player')
                 .setRequired(true)
         ),
-    async execute(interaction) {
+    async execute(interaction, isEphemeral) {
         let name = interaction.options.getString('name');
         if (name.split(" ").length > 1) {
-            return replyPlayerNameNotFoundOrInvalidEmbed(interaction);
+            return replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral);
         }
         let res = await fetch(`${process.env.API_ENDPOINT}/search/player/${name}`);
         let playerResponse = await res.json();
         if (playerResponse.Slug === "player_not_found") {
-            return replyPlayerNameNotFoundOrInvalidEmbed(interaction);
+            return replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral);
         } else {
             await replyFetchingDataEmbed(interaction);
             let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}`);
             let playerData = await response.json();
-            return replyProfitEmbed(interaction, playerResponse[0].uuid, name, playerData.totalProfit);
+            return replyProfitEmbed(interaction, playerResponse[0].uuid, name, playerData.totalProfith);
         }
     }
 }
 
-async function replyPlayerNameNotFoundOrInvalidEmbed(interaction) {
+async function replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral) {
     const embeded = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor('Error!')
         .setDescription('The Name you entered was not found please check your spelling')
-    return await interaction.reply({ embeds: [embeded]})
+    return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral})
 }
 
-async function replyFetchingDataEmbed(interaction) {
+async function replyFetchingDataEmbed(interaction, isEphemeral) {
     const fetchingData = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor(interaction.member.user.tag)
         .setDescription('Fetching data...')
-    return await interaction.reply({ embeds: [fetchingData]})
+    return await interaction.reply({ embeds: [fetchingData], ephemeral: isEphemeral})
 }
 
 async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit) {
@@ -59,7 +59,6 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit
         .setDescription(`<@${userID}>`)
         .setThumbnail(`https://crafatar.com/renders/head/${playerUUID}`)
         .addField(`${playerName} has made`, `${formatToPriceToShorten(totalProfit, 0)} in the last 7 days`, true)
-
         .setTimestamp()
     return await interaction.editReply({ embeds: [exampleEmbed]})
 }
