@@ -26,10 +26,10 @@ module.exports = {
         if (playerResponse.Slug === "player_not_found") {
             return replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral);
         } else {
-            await replyFetchingDataEmbed(interaction);
+            await replyFetchingDataEmbed(interaction, isEphemeral);
             let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}`);
             let playerData = await response.json();
-            return replyProfitEmbed(interaction, playerResponse[0].uuid, name, playerData.totalProfit);
+            return replyProfitEmbed(interaction, playerResponse[0].uuid, name, playerData.totalProfit, isEphemeral);
         }
     }
 }
@@ -50,7 +50,7 @@ async function replyFetchingDataEmbed(interaction, isEphemeral) {
     return await interaction.reply({ embeds: [fetchingData], ephemeral: isEphemeral})
 }
 
-async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit) {
+async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit, isEphemeral) {
     const userID = (interaction.member.user.id)
     const exampleEmbed = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
@@ -60,7 +60,7 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit
         .setThumbnail(`https://crafatar.com/renders/head/${playerUUID}`)
         .addField(`${playerName} has made`, `${formatToPriceToShorten(totalProfit, 0)} in the last 7 days`, true)
         .setTimestamp()
-    return await interaction.editReply({ embeds: [exampleEmbed]})
+    return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral})
 }
 
 function formatToPriceToShorten(num, decimals) {
