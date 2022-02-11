@@ -19,7 +19,7 @@ client.on('messageCreate', (message) => {
     var text = message.content.toLowerCase();
     var nitroRegexr = text.match(nitroRegex);
     if (nitroRegexr != null) {
-        message.delete();
+        return message.delete();
     }
     if (message.author.bot) {
         return;
