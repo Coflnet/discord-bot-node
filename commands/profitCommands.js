@@ -4,8 +4,8 @@ const { MessageEmbed } = require('discord.js');
 const dotenv = require('dotenv')
 dotenv.config()
 
-
 const COLOR_EMBEDED_MESSAGES = ('#0099ff')
+
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -19,7 +19,7 @@ module.exports = {
     async execute(interaction, isEphemeral) {
         let name = interaction.options.getString('name');
         if (name.split(" ").length > 1) {
-            return replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral);
+            return replyNoSpacesInNameEmbed(interaction, isEphemeral);
         }
         let res = await fetch(`${process.env.API_ENDPOINT}/search/player/${name}`);
         let playerResponse = await res.json();
@@ -34,12 +34,20 @@ module.exports = {
     }
 }
 
+async function replyNoSpacesInNameEmbed(interaction, isEphemeral) {
+    const embeded = new MessageEmbed()
+        .setColor(COLOR_EMBEDED_MESSAGES)
+        .setAuthor('Error!')
+        .setDescription('Please avoid entering a space in the username')
+    return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
+}
+
 async function replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral) {
     const embeded = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor('Error!')
         .setDescription('The Name you entered was not found please check your spelling')
-    return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral})
+    return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
 }
 
 async function replyFetchingDataEmbed(interaction, isEphemeral) {
@@ -47,7 +55,7 @@ async function replyFetchingDataEmbed(interaction, isEphemeral) {
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor(interaction.member.user.tag)
         .setDescription('Fetching data...')
-    return await interaction.reply({ embeds: [fetchingData], ephemeral: isEphemeral})
+    return await interaction.reply({ embeds: [fetchingData], ephemeral: isEphemeral })
 }
 
 async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit, isEphemeral) {
@@ -58,7 +66,7 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit
         .setAuthor('Flipping Profit')
         .setDescription(`<@${userID}>`)
         .setThumbnail(`https://crafatar.com/renders/head/${playerUUID}`)
-        .addField(`${playerName} has made`, `${formatToPriceToShorten(totalProfit, 0)} in the last 7 days`, true)
+        .addField(`${playerName} has made`,  '**' + `${formatToPriceToShorten(totalProfit, 0)}` + "**" +  " in the last 7 days, true")
         .setTimestamp()
     return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral})
 }

@@ -19,7 +19,7 @@ client.on('messageCreate', (message) => {
     var text = message.content.toLowerCase();
     var nitroRegexr = text.match(nitroRegex);
     if (nitroRegexr != null) {
-        message.delete();
+        return message.delete();
     }
     if (message.author.bot) {
         return;
@@ -60,7 +60,7 @@ client.on('interactionCreate', async interaction => {
         await command.execute(interaction, isEphemeral);
     } catch (error) {
         console.error(error);
-        await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true});
+        await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
     }
 })
 
