@@ -1,41 +1,6 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const fetch = require('cross-fetch');
-const { MessageEmbed } = require('discord.js');
-const dotenv = require('dotenv')
-dotenv.config()
-
+const { MessageEmbed } = import('discord.js');
 const COLOR_EMBEDED_MESSAGES = ('#0099ff')
 
-
-
-module.exports = {
-    data: new SlashCommandBuilder()
-        .setName('profit')
-        .setDescription('how much profit some has made in the last 7 days')
-        .addStringOption(option =>
-            option.setName('name')
-                .setDescription('the username of the player')
-                .setRequired(true)
-        ),
-    async execute(interaction, isEphemeral) {
-        let name = interaction.options.getString('name');
-        if (name.split(" ").length > 1) {
-            return replyNoSpacesInNameEmbed(interaction, isEphemeral);
-        }
-        let res = await fetch(`${process.env.API_ENDPOINT}/search/player/${name}`);
-
-        let playerResponse = await res.json();
-        if (playerResponse.Slug === "player_not_found") {
-            return replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral);
-        } else {
-            await replyFetchingDataEmbed(interaction);
-            let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}`);
-            let playerData = await response.json();
-            return await replyProfitEmbed(interaction, playerResponse[0].uuid, name, playerData.totalProfit);
-            
-        }
-    }
-}
 
 async function replyNoSpacesInNameEmbed(interaction, isEphemeral) {
     const embeded = new MessageEmbed()
@@ -45,7 +10,7 @@ async function replyNoSpacesInNameEmbed(interaction, isEphemeral) {
     return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
 }
 
-async function replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral) {
+ export var replyPlayerNameNotFoundOrInvalidEmbed = async function (interaction, isEphemeral) {
     const embeded = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor('Error!')
@@ -69,7 +34,7 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit
         .setAuthor('Flipping Profit')
         .setDescription(`<@${userID}>`)
         .setThumbnail(`https://crafatar.com/renders/head/${playerUUID}`)
-        .addField(`${playerName} has made`, '**' + `${formatToPriceToShorten(totalProfit, 0)}` + "**" + " in the last 7 days")
+        .addField(`${playerName} has made`,  '**' + `${formatToPriceToShorten(totalProfit, 0)}` + "**" +  " in the last 7 days, true")
         .setTimestamp()
     return await interaction.editReply({ embeds: [exampleEmbed] })
 }
@@ -87,4 +52,8 @@ function formatToPriceToShorten(num, decimals) {
         return (num / 1_000).toFixed(decimals) + "k";
 
     return num.toFixed(0)
+}
+
+export var foo = function() {
+
 }

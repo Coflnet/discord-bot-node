@@ -157,6 +157,7 @@ function getResponseToQuestion(question) {
 function checkForSpecialMessage(message) {
     let hour = new Date().getHours()
     if (hour >= 2 || hour <= 7) {
+        //akwavs id
         if (message.author === 267680402594988033) {
             message.author.send("Please go to Sleep");
         }
