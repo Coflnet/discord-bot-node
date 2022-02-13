@@ -68,9 +68,9 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit
         .setAuthor('Flipping Profit')
         .setDescription(`<@${userID}>`)
         .setThumbnail(`https://crafatar.com/renders/head/${playerUUID}`)
-        .addField(`${playerName} has made`, '**' + `${formatToPriceToShorten(totalProfit, 0)}` + "**" + " in the last 7 days")
+        .addField(`${playerName} has made`, '**' + `${formatToPriceToShorten(totalProfit, 0)}` + '**' + " in the last 7 days")
         .setTimestamp()
-    return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral})
+    return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral })
 }
 
 function formatToPriceToShorten(num, decimals) {
