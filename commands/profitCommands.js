@@ -16,8 +16,14 @@ module.exports = {
             option.setName('name')
                 .setDescription('the username of the player')
                 .setRequired(true)
-        ),
+        )
+        .addStringOption(option =>
+            option.setName('days')
+            .setDescription('flips in the last x days')
+            .setRequired(true)
+            ),
     async execute(interaction, isEphemeral) {
+        let days = interaction.options.getString('days');
         let name = interaction.options.getString('name');
         if (name.split(" ").length > 1) {
             return replyNoSpacesInNameEmbed(interaction, isEphemeral);
@@ -29,9 +35,9 @@ module.exports = {
             return replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral);
         } else {
             await replyFetchingDataEmbed(interaction, isEphemeral);
-            let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}`);
+            let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}?days=${days}`);
             let playerData = await response.json();
-            return replyProfitEmbed(interaction, playerResponse[0].uuid, name, playerData.totalProfit, isEphemeral);
+            return replyProfitEmbed(interaction, playerResponse[0].uuid, name, playerData.totalProfit, days, isEphemeral);
         }
     }
 }
@@ -60,7 +66,7 @@ async function replyFetchingDataEmbed(interaction, isEphemeral) {
     return await interaction.reply({ embeds: [fetchingData], ephemeral: isEphemeral })
 }
 
-async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit, isEphemeral) {
+async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit, days, isEphemeral) {
     const userID = (interaction.member.user.id)
     const exampleEmbed = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
@@ -68,7 +74,7 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit
         .setAuthor('Flipping Profit')
         .setDescription(`<@${userID}>`)
         .setThumbnail(`https://crafatar.com/renders/head/${playerUUID}`)
-        .addField(`${playerName} has made`, '**' + `${formatToPriceToShorten(totalProfit, 0)}` + '**' + ' in the last 7 days')
+        .addField(`${playerName} has made`, '**' + `${formatToPriceToShorten(totalProfit, 0)}` + '**' + ' in the last ' + `${days}`)
         .setTimestamp()
     return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral })
 }
