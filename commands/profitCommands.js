@@ -28,7 +28,7 @@ module.exports = {
         let res = await fetch(`${process.env.API_ENDPOINT}/search/player/${name}`);
         days = days || 7
 
-        if (days >= 8 || days <= 0.4){
+        if (days > 7 || days < 0.5){
             return replygreaterThan7OrSmallerThen05Embed(isEphemeral, interaction)
         }
         if (name.split(" ").length > 1) {
