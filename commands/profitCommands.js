@@ -28,7 +28,7 @@ module.exports = {
 
         days = days || 7
 
-        if (days > 7 || days < 0.5){
+        if (days > 7 || days < 0.5) {
             return replyDaysOutOfBoundsEmbed(isEphemeral, interaction)
         }
         if (name.split(" ").length > 1) {
@@ -38,7 +38,7 @@ module.exports = {
         let playerResponse = await res.json();
         if (playerResponse.Slug === "player_not_found") {
             return replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral);
-        } else {       
+        } else {
             await replyFetchingDataEmbed(interaction, isEphemeral);
             let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}?days=${days}`);
             let playerData = await response.json();
@@ -51,13 +51,13 @@ module.exports = {
 }
 
 
-async function replyDaysOutOfBoundsEmbed(isEphemeral, interaction){
+async function replyDaysOutOfBoundsEmbed(isEphemeral, interaction) {
     const embeded = new MessageEmbed()
-    .setColor(COLOR_EMBEDED_MESSAGES)
-    .setAuthor('Error!')
-    .setDescription('Please dont enter a days count of bigger then 7 or smaller then 0.5')
-return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
-} 
+        .setColor(COLOR_EMBEDED_MESSAGES)
+        .setAuthor('Error!')
+        .setDescription('Please dont enter a days count of bigger then 7 or smaller then 0.5')
+    return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
+}
 
 async function replyNoSpacesInNameEmbed(interaction, isEphemeral) {
     const embeded = new MessageEmbed()
@@ -84,11 +84,11 @@ async function replyFetchingDataEmbed(interaction, isEphemeral) {
 }
 
 async function nanErrorReplyEmbed(isEphemeral, interaction, playerData) {
-    const errorreply = new MessageEmbed()
+    const errorReply = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor('Error!')
         .setDescription(playerData)
-    return await interaction.editReply({ embeds: [errorreply], ephemeral: isEphemeral })
+    return await interaction.editReply({ embeds: [errorReply], ephemeral: isEphemeral })
 }
 
 async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit, days, isEphemeral) {
