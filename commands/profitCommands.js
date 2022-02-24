@@ -25,20 +25,20 @@ module.exports = {
     async execute(interaction, isEphemeral) {
         let name = interaction.options.getString('name')
         let days = interaction.options.getString('days')
-        let res = await fetch(`${process.env.API_ENDPOINT}/search/player/${name}`);
+
         days = days || 7
 
         if (days > 7 || days < 0.5){
-            return replygreaterThan7OrSmallerThen05Embed(isEphemeral, interaction)
+            return replyDaysOutOfBoundsEmbed(isEphemeral, interaction)
         }
         if (name.split(" ").length > 1) {
             return replyNoSpacesInNameEmbed(interaction, isEphemeral);
         }
-
+        let res = await fetch(`${process.env.API_ENDPOINT}/search/player/${name}`);
         let playerResponse = await res.json();
         if (playerResponse.Slug === "player_not_found") {
             return replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral);
-        } else {
+        } else {       
             await replyFetchingDataEmbed(interaction, isEphemeral);
             let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}?days=${days}`);
             let playerData = await response.json();
@@ -51,7 +51,7 @@ module.exports = {
 }
 
 
-async function replygreaterThan7OrSmallerThen05Embed(isEphemeral, interaction){
+async function replyDaysOutOfBoundsEmbed(isEphemeral, interaction){
     const embeded = new MessageEmbed()
     .setColor(COLOR_EMBEDED_MESSAGES)
     .setAuthor('Error!')
