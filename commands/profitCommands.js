@@ -16,24 +16,47 @@ module.exports = {
             option.setName('name')
                 .setDescription('the username of the player')
                 .setRequired(true)
+        )
+        .addStringOption(option =>
+            option.setName('days')
+                .setDescription('flips in the last x days')
+                .setRequired(false)
         ),
     async execute(interaction, isEphemeral) {
-        let name = interaction.options.getString('name');
+        let name = interaction.options.getString('name')
+        let days = interaction.options.getString('days')
+
+        days = days || 7
+
+        if (days > 7 || days < 0.5) {
+            return replyDaysOutOfBoundsEmbed(isEphemeral, interaction)
+        }
         if (name.split(" ").length > 1) {
             return replyNoSpacesInNameEmbed(interaction, isEphemeral);
         }
         let res = await fetch(`${process.env.API_ENDPOINT}/search/player/${name}`);
-
         let playerResponse = await res.json();
         if (playerResponse.Slug === "player_not_found") {
             return replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral);
         } else {
             await replyFetchingDataEmbed(interaction, isEphemeral);
-            let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}`);
+            let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}?days=${days}`);
             let playerData = await response.json();
-            return replyProfitEmbed(interaction, playerResponse[0].uuid, name, playerData.totalProfit, isEphemeral);
+            if (playerData === 'NaN') {
+                return nanErrorReplyEmbed(isEphemeral, interaction, playerData)
+            }
+            return replyProfitEmbed(interaction, playerResponse[0].uuid, name, playerData.totalProfit, days, isEphemeral);
         }
     }
+}
+
+
+async function replyDaysOutOfBoundsEmbed(isEphemeral, interaction) {
+    const embeded = new MessageEmbed()
+        .setColor(COLOR_EMBEDED_MESSAGES)
+        .setAuthor('Error!')
+        .setDescription('Please dont enter a days count of bigger then 7 or smaller then 0.5')
+    return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
 }
 
 async function replyNoSpacesInNameEmbed(interaction, isEphemeral) {
@@ -60,7 +83,15 @@ async function replyFetchingDataEmbed(interaction, isEphemeral) {
     return await interaction.reply({ embeds: [fetchingData], ephemeral: isEphemeral })
 }
 
-async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit, isEphemeral) {
+async function nanErrorReplyEmbed(isEphemeral, interaction, playerData) {
+    const errorReply = new MessageEmbed()
+        .setColor(COLOR_EMBEDED_MESSAGES)
+        .setAuthor('Error!')
+        .setDescription(playerData)
+    return await interaction.editReply({ embeds: [errorReply], ephemeral: isEphemeral })
+}
+
+async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit, days, isEphemeral) {
     const userID = (interaction.member.user.id)
     const exampleEmbed = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
@@ -68,7 +99,7 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit
         .setAuthor('Flipping Profit')
         .setDescription(`<@${userID}>`)
         .setThumbnail(`https://crafatar.com/renders/head/${playerUUID}`)
-        .addField(`${playerName} has made`, '**' + `${formatToPriceToShorten(totalProfit, 0)}` + '**' + ' in the last 7 days')
+        .addField(`${playerName} has made`, `**${formatToPriceToShorten(totalProfit, 0)}** in the last ${days} days`)
         .setTimestamp()
     return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral })
 }
