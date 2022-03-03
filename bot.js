@@ -34,6 +34,12 @@ client.on('messageCreate', (message) => {
         return;
     }
 
+    if (message.content === 'test'){
+        (message.channel.send())
+    }
+
+    //giveAwayStart(message);
+
     checkForSpecialMessage(message);
 
     let answer = getResponseToQuestion(message.content.toLowerCase());
@@ -63,6 +69,7 @@ client.on('interactionCreate', async interaction => {
         await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
     }
 })
+
 
 function getClientCommands() {
 
