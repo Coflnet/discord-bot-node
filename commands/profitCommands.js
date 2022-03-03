@@ -49,7 +49,7 @@ module.exports = {
             return replyProfitEmbed(interaction, playerResponse[0].uuid, name, days, flipData, isEphemeral);
         }
     }
-}
+
 
 
 async function replyDaysOutOfBoundsEmbed(isEphemeral, interaction) {
