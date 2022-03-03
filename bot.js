@@ -64,6 +64,7 @@ client.on('interactionCreate', async interaction => {
     }
 })
 
+
 function getClientCommands() {
 
     let commands = new Collection();

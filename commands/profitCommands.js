@@ -41,11 +41,12 @@ module.exports = {
         } else {
             await replyFetchingDataEmbed(interaction, isEphemeral);
             let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}?days=${days}`);
-            let playerData = await response.json();
-            if (playerData === 'NaN') {
+            let flipData = await response.json();
+            }
+            if (flipData.Slug === 'NaN') {
                 return nanErrorReplyEmbed(isEphemeral, interaction, playerData)
             }
-            return replyProfitEmbed(interaction, playerResponse[0].uuid, name, playerData.totalProfit, days, isEphemeral);
+            return replyProfitEmbed(interaction, playerResponse[0].uuid, name, days, flipData, isEphemeral);
         }
     }
 }
@@ -91,7 +92,8 @@ async function nanErrorReplyEmbed(isEphemeral, interaction, playerData) {
     return await interaction.editReply({ embeds: [errorReply], ephemeral: isEphemeral })
 }
 
-async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit, days, isEphemeral) {
+async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipData, isEphemeral) {
+    let bestFlip = flipData.flips[0]
     const userID = (interaction.member.user.id)
     const exampleEmbed = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
@@ -99,7 +101,8 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, totalProfit
         .setAuthor('Flipping Profit')
         .setDescription(`<@${userID}>`)
         .setThumbnail(`https://crafatar.com/renders/head/${playerUUID}`)
-        .addField(`${playerName} has made`, `**${formatToPriceToShorten(totalProfit, 0)}** in the last ${days} days`)
+        .addField(`${playerName} has made`, `**${formatToPriceToShorten(flipData.totalProfit, 0)}** in the last ${days} days`)
+        .addField(`The highest profit flip was`, `${bestFlip.itemName} bought for ${formatToPriceToShorten(bestFlip.pricePaid)} sold for ${formatToPriceToShorten(bestFlip.soldFor)} profit being **${formatToPriceToShorten(bestFlip.profit)}**`)
         .setTimestamp()
     return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral })
 }
