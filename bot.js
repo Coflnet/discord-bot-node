@@ -34,12 +34,6 @@ client.on('messageCreate', (message) => {
         return;
     }
 
-    if (message.content === 'test'){
-        (message.channel.send())
-    }
-
-    //giveAwayStart(message);
-
     checkForSpecialMessage(message);
 
     let answer = getResponseToQuestion(message.content.toLowerCase());
