@@ -15,9 +15,10 @@ const nitroRegex = /((.*http.*)(.*nitro.*))|((.*nitro.*)(.*http.*))|((.*http.*)(
 client.commands = getClientCommands();
 
 client.on('ready', () => {
-    client.users.fetch(process.env.TENTAMENS_USER_ID, false).then((user) => {
+    // id of user tentamens to notify on startup
+    client.users.fetch('659541857616920577').then((user) => {
         user.send('The discord bot restarted');
-       });
+    });
 });
 
 client.on('messageCreate', (message) => {
