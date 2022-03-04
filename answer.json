@@ -1,18 +1,6 @@
 [
     {
         "question": [
-            "whats",
-            "tfm"
-        ],
-        "blacklist": [
-            "where",
-            "buy",
-            "if"
-        ],
-        "answer": ":point_right: An ah flipper/sniper, this is its discord https://discord.gg/qfm5Drase2"
-    },
-    {
-        "question": [
             "price",
             "paid"
         ],
