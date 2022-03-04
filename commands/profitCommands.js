@@ -38,17 +38,16 @@ module.exports = {
         let playerResponse = await res.json();
         if (playerResponse.Slug === "player_not_found") {
             return replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral);
-        } else {
-            await replyFetchingDataEmbed(interaction, isEphemeral);
-            let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}?days=${days}`);
-            let flipData = await response.json();
-            }
-            if (flipData.Slug === 'NaN') {
-                return nanErrorReplyEmbed(isEphemeral, interaction, playerData)
-            }
-            return replyProfitEmbed(interaction, playerResponse[0].uuid, name, days, flipData, isEphemeral);
         }
+        await replyFetchingDataEmbed(interaction, isEphemeral);
+        let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}?days=${days}`);
+        let flipData = await response.json();
+        if (flipData.Slug === 'NaN') {
+            return nanErrorReplyEmbed(isEphemeral, interaction, playerData)
+        }
+        return replyProfitEmbed(interaction, playerResponse[0].uuid, name, days, flipData, isEphemeral);
     }
+}
 
 
 
