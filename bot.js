@@ -14,6 +14,13 @@ const nitroRegex = /((.*http.*)(.*nitro.*))|((.*nitro.*)(.*http.*))|((.*http.*)(
 
 client.commands = getClientCommands();
 
+client.on('ready', () => {
+    // id of user tentamens to notify on startup
+    client.users.fetch('659541857616920577').then((user) => {
+        user.send('The discord bot restarted');
+    });
+});
+
 client.on('messageCreate', (message) => {
 
     var text = message.content.toLowerCase();
