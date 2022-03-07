@@ -41,7 +41,11 @@ module.exports = {
         }
         await replyFetchingDataEmbed(interaction, isEphemeral);
         let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}?days=${days}`);
+     
         let flipData = await response.json();
+           if (flipData.totalProfit === 0){
+            return  reply0ProfitEmbed(isEphemeral, interaction);
+        }
         if (flipData.Slug === 'NaN') {
             return nanErrorReplyEmbed(isEphemeral, interaction, playerData)
         }
@@ -49,7 +53,13 @@ module.exports = {
     }
 }
 
-
+async function reply0ProfitEmbed(isEphemeral, interaction) {
+    const embeded = new MessageEmbed()
+        .setColor(COLOR_EMBEDED_MESSAGES)
+        .setAuthor('Error!')
+        .setDescription('There was an error of no auctions found',`if this continues to happen please contact <${process.env.DISCORD_USER_ID}>`)
+    return await interaction.editReply({ embeds: [embeded], ephemeral: isEphemeral })
+}
 
 async function replyDaysOutOfBoundsEmbed(isEphemeral, interaction) {
     const embeded = new MessageEmbed()
