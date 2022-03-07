@@ -46,6 +46,7 @@ module.exports = {
            if (flipData.totalProfit === 0){
             return  reply0ProfitEmbed(isEphemeral, interaction);
         }
+        
         if (flipData.Slug === 'NaN') {
             return nanErrorReplyEmbed(isEphemeral, interaction, playerData)
         }
@@ -57,7 +58,8 @@ async function reply0ProfitEmbed(isEphemeral, interaction) {
     const embeded = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor('Error!')
-        .setDescription('There was an error of no auctions found',`if this continues to happen please contact <${process.env.DISCORD_USER_ID}>`)
+        .setDescription(`There was an error of no auctions found\nif this continues to happen please contact <@${process.env.DISCORD_USER_ID}>`)
+        .setTimestamp()
     return await interaction.editReply({ embeds: [embeded], ephemeral: isEphemeral })
 }
 
@@ -66,6 +68,7 @@ async function replyDaysOutOfBoundsEmbed(isEphemeral, interaction) {
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor('Error!')
         .setDescription('Please dont enter a days count of bigger then 7 or smaller then 0.5')
+        .setTimestamp()
     return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
 }
 
@@ -74,6 +77,7 @@ async function replyNoSpacesInNameEmbed(interaction, isEphemeral) {
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor('Error!')
         .setDescription('Please avoid entering a space in the username')
+        .setTimestamp()
     return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
 }
 
@@ -82,6 +86,7 @@ async function replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral) {
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor('Error!')
         .setDescription('The Name you entered was not found please check your spelling')
+        .setTimestamp()
     return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
 }
 
@@ -90,6 +95,7 @@ async function replyFetchingDataEmbed(interaction, isEphemeral) {
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor(interaction.member.user.tag)
         .setDescription('Fetching data...')
+        .setTimestamp()
     return await interaction.reply({ embeds: [fetchingData], ephemeral: isEphemeral })
 }
 
@@ -98,6 +104,7 @@ async function nanErrorReplyEmbed(isEphemeral, interaction, playerData) {
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor('Error!')
         .setDescription(playerData)
+        .setTimestamp()
     return await interaction.editReply({ embeds: [errorReply], ephemeral: isEphemeral })
 }
 
