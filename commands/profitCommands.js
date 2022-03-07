@@ -112,7 +112,7 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipD
     if (bestFlip) {
         exampleEmbed = exampleEmbed.addField(`The highest profit flip was`, `${bestFlip.itemName} bought for ${formatToPriceToShorten(bestFlip.pricePaid)} sold for ${formatToPriceToShorten(bestFlip.soldFor)} profit being **${formatToPriceToShorten(bestFlip.profit)}**`)
     } else {
-        exampleEmbed = exampleEmbed.addField('test', `There where no flips found :frowning2:`)
+        exampleEmbed = exampleEmbed.addField('Error!', `There where no flips found :frowning2:`)
     }
 
     return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral })
