@@ -41,12 +41,9 @@ module.exports = {
         }
         await replyFetchingDataEmbed(interaction, isEphemeral);
         let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}?days=${days}`);
-     
+
         let flipData = await response.json();
-           if (flipData.totalProfit === 0){
-            return  reply0ProfitEmbed(isEphemeral, interaction);
-        }
-        
+
         if (flipData.Slug === 'NaN') {
             return nanErrorReplyEmbed(isEphemeral, interaction, playerData)
         }
@@ -54,14 +51,7 @@ module.exports = {
     }
 }
 
-async function reply0ProfitEmbed(isEphemeral, interaction) {
-    const embeded = new MessageEmbed()
-        .setColor(COLOR_EMBEDED_MESSAGES)
-        .setAuthor('Error!')
-        .setDescription(`There was an error of no auctions found\nif this continues to happen please contact <@${process.env.DISCORD_USER_ID}>`)
-        .setTimestamp()
-    return await interaction.editReply({ embeds: [embeded], ephemeral: isEphemeral })
-}
+
 
 async function replyDaysOutOfBoundsEmbed(isEphemeral, interaction) {
     const embeded = new MessageEmbed()
@@ -111,29 +101,35 @@ async function nanErrorReplyEmbed(isEphemeral, interaction, playerData) {
 async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipData, isEphemeral) {
     let bestFlip = flipData.flips[0]
     const userID = (interaction.member.user.id)
-    const exampleEmbed = new MessageEmbed()
+    let exampleEmbed = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setURL('https://discord.js.org/')
         .setAuthor('Flipping Profit')
         .setDescription(`<@${userID}>`)
         .setThumbnail(`https://crafatar.com/renders/head/${playerUUID}`)
         .addField(`${playerName} has made`, `**${formatToPriceToShorten(flipData.totalProfit, 0)}** in the last ${days} days`)
-        .addField(`The highest profit flip was`, `${bestFlip.itemName} bought for ${formatToPriceToShorten(bestFlip.pricePaid)} sold for ${formatToPriceToShorten(bestFlip.soldFor)} profit being **${formatToPriceToShorten(bestFlip.profit)}**`)
         .setTimestamp()
+    if (bestFlip) {
+        exampleEmbed = exampleEmbed.addField(`The highest profit flip was`, `${bestFlip.itemName} bought for ${formatToPriceToShorten(bestFlip.pricePaid)} sold for ${formatToPriceToShorten(bestFlip.soldFor)} profit being **${formatToPriceToShorten(bestFlip.profit)}**`)
+    } else {
+        exampleEmbed = exampleEmbed.addField('test', `There where no flips found :frowning2:`)
+    }
+
     return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral })
 }
 
-function formatToPriceToShorten(num, decimals) {
+function formatToPriceToShorten(num = 0, decimals = 0) {
     // Ensure number has max 3 significant digits (no rounding up can happen)
-    let i = Math.pow(10, Math.max(0, Math.log10(num) - 2));
-    num = num / i * i;
+    let i = Math.pow(10, Math.max(0, Math.log10(Math.abs(num)) - 2));
+    let absNumber = Math.abs(num) / i * i;
+    let realNumber = num < -1 ? absNumber * -1 : absNumber
 
-    if (num >= 1_000_000_000)
-        return (num / 1_000_000_000).toFixed(decimals) + "B";
-    if (num >= 1_000_000)
-        return (num / 1_000_000).toFixed(decimals) + "M";
-    if (num >= 1_000)
-        return (num / 1_000).toFixed(decimals) + "k";
+    if (absNumber >= 1_000_000_000)
+        return (realNumber / 1_000_000_000).toFixed(decimals) + "B";
+    if (absNumber >= 1_000_000)
+        return (realNumber / 1_000_000).toFixed(decimals) + "M";
+    if (absNumber >= 1_000)
+        return (realNumber / 1_000).toFixed(decimals) + "k";
 
-    return num.toFixed(0)
+    return realNumber.toFixed(0)
 }
