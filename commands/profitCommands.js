@@ -99,6 +99,7 @@ async function nanErrorReplyEmbed(isEphemeral, interaction, playerData) {
 }
 
 async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipData, isEphemeral) {
+    let worstFlip = flipData.flips.slice(-1)[0];
     let bestFlip = flipData.flips[0]
     const userID = (interaction.member.user.id)
     let exampleEmbed = new MessageEmbed()
@@ -111,6 +112,12 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipD
         .setTimestamp()
     if (bestFlip) {
         exampleEmbed = exampleEmbed.addField(`The highest profit flip was`, `${bestFlip.itemName} bought for ${formatToPriceToShorten(bestFlip.pricePaid)} sold for ${formatToPriceToShorten(bestFlip.soldFor)} profit being **${formatToPriceToShorten(bestFlip.profit)}**`)
+    } else {
+        exampleEmbed = exampleEmbed.addField('Error!', `There where no flips found :frowning2:`)
+    }
+
+    if (worstFlip) {
+        exampleEmbed = exampleEmbed.addField(`The lowest profit flip was`, `${worstFlip.itemName} bought for ${formatToPriceToShorten(worstFlip.pricePaid)} sold for ${(formatToPriceToShorten(worstFlip.soldFor))} total loss being **${formatToPriceToShorten(worstFlip.profit)}**`)
     } else {
         exampleEmbed = exampleEmbed.addField('Error!', `There where no flips found :frowning2:`)
     }
