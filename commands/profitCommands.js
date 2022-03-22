@@ -99,10 +99,10 @@ async function nanErrorReplyEmbed(isEphemeral, interaction, playerData) {
 }
 
 async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipData, isEphemeral) {
-    let worstFlip = flipData.flips.slice(-1)[0];
+    let worstFlip = flipData.flips[flipData.flips.length -1]
     let bestFlip = flipData.flips[0]
     const userID = (interaction.member.user.id)
-    let exampleEmbed = new MessageEmbed()
+    let profitEmbed = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setURL('https://discord.js.org/')
         .setAuthor('Flipping Profit')
@@ -110,19 +110,14 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipD
         .setThumbnail(`https://crafatar.com/renders/head/${playerUUID}`)
         .addField(`${playerName} has made`, `**${formatToPriceToShorten(flipData.totalProfit, 0)}** in the last ${days} days`)
         .setTimestamp()
-    if (bestFlip) {
-        exampleEmbed = exampleEmbed.addField(`The highest profit flip was`, `${bestFlip.itemName} bought for ${formatToPriceToShorten(bestFlip.pricePaid)} sold for ${formatToPriceToShorten(bestFlip.soldFor)} profit being **${formatToPriceToShorten(bestFlip.profit)}**`)
+    if (flipData.flips.length === 0) {
+       profitEmbed = profitEmbed.addField('Error!', `There where no flips found :frowning2:`)
     } else {
-        exampleEmbed = exampleEmbed.addField('Error!', `There where no flips found :frowning2:`)
+        profitEmbed = profitEmbed.addField(`The highest profit flip was`, `${bestFlip.itemName} bought for ${formatToPriceToShorten(bestFlip.pricePaid)} sold for ${formatToPriceToShorten(bestFlip.soldFor)} profit being **${formatToPriceToShorten(bestFlip.profit)}**`)
+        profitEmbed = profitEmbed.addField(`The lowest profit flip was`, `${worstFlip.itemName} bought for ${formatToPriceToShorten(worstFlip.pricePaid)} sold for ${(formatToPriceToShorten(worstFlip.soldFor))} total loss being **${formatToPriceToShorten(worstFlip.profit)}**`)
     }
 
-    if (worstFlip) {
-        exampleEmbed = exampleEmbed.addField(`The lowest profit flip was`, `${worstFlip.itemName} bought for ${formatToPriceToShorten(worstFlip.pricePaid)} sold for ${(formatToPriceToShorten(worstFlip.soldFor))} total loss being **${formatToPriceToShorten(worstFlip.profit)}**`)
-    } else {
-        exampleEmbed = exampleEmbed.addField('Error!', `There where no flips found :frowning2:`)
-    }
-
-    return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral })
+    return await interaction.editReply({ embeds: [profitEmbed], ephemeral: isEphemeral })
 }
 
 function formatToPriceToShorten(num = 0, decimals = 0) {
