@@ -110,7 +110,7 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipD
         .addField(`${playerName} has made`, `**${formatToPriceToShorten(flipData.totalProfit, 0)}** in the last ${days} days`)
         .setTimestamp()
     if (bestFlip) {
-        exampleEmbed = exampleEmbed.addField(`The highest profit flip was`, `${bestFlip.itemName} bought for ${formatToPriceToShorten(bestFlip.pricePaid)} sold for ${formatToPriceToShorten(bestFlip.soldFor)} profit being **${formatToPriceToShorten(bestFlip.profit)}**`)
+        exampleEmbed = exampleEmbed.addField(`**The highest profit flip was**`, `${bestFlip.itemName} bought for ${formatToPriceToShorten(bestFlip.pricePaid)} sold for ${formatToPriceToShorten(bestFlip.soldFor)} profit being **${formatToPriceToShorten(bestFlip.profit)}**`)
     } else {
         exampleEmbed = exampleEmbed.addField('Error!', `There where no flips found :frowning2:`)
     }
