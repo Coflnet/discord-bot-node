@@ -116,6 +116,9 @@ function checkForDelete(message) {
     }
 
     if (message.content.toLowerCase().split(" ").length == 1) {
+        if (message.content.length == 61){
+            return
+        }
         if (new Date() - messageTimes[message.author.id] < 10000) {
             message.author.send('Your message was was deleted due one word message spamming. Please do not send 1 word messages')
             message.delete();
