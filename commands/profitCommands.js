@@ -113,8 +113,8 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipD
     if (flipData.flips.length === 0) {
        profitEmbed = profitEmbed.addField('Error!', `There where no flips found :frowning2:`)
     } else {
-        profitEmbed = profitEmbed.addField(`The highest profit flip was`, `${bestFlip.itemName} bought for ${formatToPriceToShorten(bestFlip.pricePaid)} sold for ${formatToPriceToShorten(bestFlip.soldFor)} profit being **${formatToPriceToShorten(bestFlip.profit)}**`)
-        profitEmbed = profitEmbed.addField(`The lowest profit flip was`, `${worstFlip.itemName} bought for ${formatToPriceToShorten(worstFlip.pricePaid)} sold for ${(formatToPriceToShorten(worstFlip.soldFor))} total loss being **${formatToPriceToShorten(worstFlip.profit)}**`)
+        profitEmbed = profitEmbed.addField(`The highest profit flip was:`, `${bestFlip.itemName} bought for ${formatToPriceToShorten(bestFlip.pricePaid)} sold for ${formatToPriceToShorten(bestFlip.soldFor)} profit being **${formatToPriceToShorten(bestFlip.profit)}**`)
+        profitEmbed = profitEmbed.addField(`**Worst BUY -> SELL:**`, `${worstFlip.itemName} bought for ${formatToPriceToShorten(worstFlip.pricePaid)} sold for ${(formatToPriceToShorten(worstFlip.soldFor))} total loss being **${formatToPriceToShorten(worstFlip.profit)}**`)
     }
 
     return await interaction.editReply({ embeds: [profitEmbed], ephemeral: isEphemeral })
