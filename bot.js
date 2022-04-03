@@ -43,10 +43,8 @@ client.on('messageCreate', (message) => {
 
     checkForSpecialMessage(message);
 
-    let answer = getResponseToQuestion(message.content.toLowerCase());
+    let answer = getResponseToQuestion(message.content.toLowerCase(), message);
     if (answer) {
-        console.log(`message: ${message.content}`)
-        console.log(`answer: ${answer}`)
         message.channel.send(answer);
     }
 
@@ -116,9 +114,7 @@ function checkForDelete(message) {
     }
 
     if (message.content.toLowerCase().split(" ").length == 1) {
-        if (message.content.length == 61){
-            return
-        }
+       
         if (new Date() - messageTimes[message.author.id] < 10000) {
             message.author.send('Your message was was deleted due one word message spamming. Please do not send 1 word messages')
             message.delete();
@@ -147,7 +143,11 @@ function sendAnswer(thread, text) {
     }
 }
 
-function getResponseToQuestion(question) {
+function getResponseToQuestion(question, message) {
+    if (message.content.length >= 61){
+        message.delete();
+        return
+    }
     for (let i = 0; i < answers.length; i++) {
         const answer = answers[i];
         let isBlacklist = answer.blacklist && answer.blacklist.some(blacklistWord => question.indexOf(blacklistWord) !== -1);
