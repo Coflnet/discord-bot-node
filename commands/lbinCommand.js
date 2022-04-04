@@ -35,7 +35,7 @@ module.exports = {
 
 
 }
-async function itemInputWasNotFoundEmbedReply(isEphemeral, interaction) {
+async function itemInputWasNotFoundEmbedReply(interaction, isEphemeral) {
     const embeded = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor('Error!')
@@ -55,7 +55,7 @@ async function replyProfitEmbed(interaction, isEphemeral, apiResponse, playerRes
         .setDescription(`<@${userID}>`)
         .setTimestamp()
     if (lowestBinInfo) {
-        exampleEmbed = exampleEmbed.addField(`the lowest bin of ${playerResponse[0].name}`, `is **${(numberWithThousandsSeperators(apiResponse.lowest))}** second lowest bin is ${(numberWithThousandsSeperators(apiResponse.secondLowest))}`)
+        exampleEmbed = exampleEmbed.addField(`The lowest bin of ${playerResponse[0].name}`, `is **${(numberWithThousandsSeperators(apiResponse.lowest))}** second lowest bin is ${(numberWithThousandsSeperators(apiResponse.secondLowest))}`)
     } else {
         exampleEmbed = exampleEmbed.addField('Error!', `There was no lbin for that item`)
     }
