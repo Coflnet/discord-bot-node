@@ -2,7 +2,6 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const fetch = require('cross-fetch');
 const { MessageEmbed } = require('discord.js');
 const dotenv = require('dotenv');
-const { execute } = require('./profitCommands');
 dotenv.config()
 
 const COLOR_EMBEDED_MESSAGES = ('#0099ff')
@@ -31,8 +30,7 @@ module.exports = {
 
         let response = await fetch(`${process.env.API_ENDPOINT}/item/price/${playerResponse[0].id}/bin`);
         let apiResponse = await response.json();
-        console.log(apiResponse)
-        return (replyProfitEmbed(interaction, isEphemeral, apiResponse, playerResponse))
+        return replyProfitEmbed(interaction, isEphemeral, apiResponse, playerResponse)
     }
 
 
@@ -49,7 +47,6 @@ async function itemInputWasNotFoundEmbedReply(isEphemeral, interaction) {
 
 async function replyProfitEmbed(interaction, isEphemeral, apiResponse, playerResponse) {
     let lowestBinInfo = apiResponse
-    console.log(lowestBinInfo)
     const userID = (interaction.member.user.id)
     let exampleEmbed = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
@@ -83,13 +80,4 @@ async function replyFetchingDataEmbed(interaction, isEphemeral) {
         .setDescription('Fetching data...')
         .setTimestamp()
     return await interaction.reply({ embeds: [fetchingData], ephemeral: isEphemeral })
-}
-
-async function replyNoSpacesInNameEmbed(interaction, isEphemeral) {
-    const embeded = new MessageEmbed()
-        .setColor(COLOR_EMBEDED_MESSAGES)
-        .setAuthor('Error!')
-        .setDescription('Please avoid entering a space in the username')
-        .setTimestamp()
-    return await interaction.editReply({ embeds: [embeded], ephemeral: isEphemeral })
 }

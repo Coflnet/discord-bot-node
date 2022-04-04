@@ -2,7 +2,6 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 const fetch = require('cross-fetch');
 const { MessageEmbed } = require('discord.js');
 const dotenv = require('dotenv');
-const { execute } = require('./profitCommands');
 dotenv.config()
 
 const COLOR_EMBEDED_MESSAGES = ('#0099ff')
@@ -31,12 +30,9 @@ module.exports = {
             return replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral);
         }
 
-
-
         let response = await fetch(`${process.env.API_ENDPOINT}/player/${playerResponse[0].uuid}/bids`);
         let apiResponse = await response.json();
         return bidsReplyEmbed(interaction, isEphemeral, apiResponse)
-
 
     }
 }
@@ -64,21 +60,6 @@ async function bidsReplyEmbed(interaction, isEphemeral, apiResponse) {
     }
     return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral })
 }
-function formatToPriceToShorten(num = 0, decimals = 0) {
-    // Ensure number has max 3 significant digits (no rounding up can happen)
-    let i = Math.pow(10, Math.max(0, Math.log10(Math.abs(num)) - 2));
-    let absNumber = Math.abs(num) / i * i;
-    let realNumber = num < -1 ? absNumber * -1 : absNumber
-
-    if (absNumber >= 1_000_000_000)
-        return (realNumber / 1_000_000_000).toFixed(decimals) + "B";
-    if (absNumber >= 1_000_000)
-        return (realNumber / 1_000_000).toFixed(decimals) + "M";
-    if (absNumber >= 1_000)
-        return (realNumber / 1_000).toFixed(decimals) + "k";
-
-    return realNumber.toFixed(0)
-}
 
 async function replyFetchingDataEmbed(interaction, isEphemeral) {
     const fetchingData = new MessageEmbed()
@@ -90,10 +71,10 @@ async function replyFetchingDataEmbed(interaction, isEphemeral) {
 }
 
 async function replyNoSpacesInNameEmbed(interaction, isEphemeral) {
-    const embeded = new MessageEmbed()
+    const noSpaceInName = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor('Error!')
         .setDescription('Please avoid entering a space in the username')
         .setTimestamp()
-    return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
+    return await interaction.reply({ embeds: [noSpaceInName], ephemeral: isEphemeral })
 }
