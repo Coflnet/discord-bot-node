@@ -157,10 +157,14 @@ function getResponseToQuestion(question) {
         if (isBlacklist) {
             continue;
         }
+        if (question.length > 60) {
+            continue;
+        }
         let found = answer.question.every(questionWord => question.indexOf(questionWord) !== -1);
         if (found) {
             return answer.answer;
         }
+        
 
     }
 }
