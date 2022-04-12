@@ -4,8 +4,11 @@ const { MessageEmbed } = require('discord.js');
 const dotenv = require('dotenv');
 dotenv.config()
 
-const COLOR_EMBEDED_MESSAGES = ('#0099ff')
-
+const {
+    replyFetchingDataEmbed,
+    itemInputWasNotFoundEmbedReply,
+    replyLowestBinEmbed
+} = require('../exports/embed.js')
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -30,53 +33,11 @@ module.exports = {
 
         let response = await fetch(`${process.env.API_ENDPOINT}/item/price/${playerResponse[0].id}/bin`);
         let apiResponse = await response.json();
-        return replyProfitEmbed(interaction, isEphemeral, apiResponse, playerResponse)
+        return replyLowestBinEmbed(interaction, isEphemeral, apiResponse, playerResponse)
     }
 
 
 }
-async function itemInputWasNotFoundEmbedReply(interaction, isEphemeral) {
-    const embeded = new MessageEmbed()
-        .setColor(COLOR_EMBEDED_MESSAGES)
-        .setAuthor('Error!')
-        .setDescription('the item you searched up was not found please try again')
-        .setTimestamp()
 
-    return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
-}
 
-async function replyProfitEmbed(interaction, isEphemeral, apiResponse, playerResponse) {
-    const userID = (interaction.member.user.id)
-    let exampleEmbed = new MessageEmbed()
-        .setColor(COLOR_EMBEDED_MESSAGES)
-        .setURL('https://discord.js.org/')
-        .setThumbnail(playerResponse[0].iconUrl)
-        .setAuthor('Lowest bin')
-        .setDescription(`<@${userID}>`)
-        .setTimestamp()
-    if (lowestBinInfo) {
-        exampleEmbed = exampleEmbed.addField(`The lowest bin of ${playerResponse[0].name}`, `is **${(numberWithThousandsSeperators(apiResponse.lowest))}** second lowest bin is ${(numberWithThousandsSeperators(apiResponse.secondLowest))}`)
-    } else {
-        exampleEmbed = exampleEmbed.addField('Error!', `There was no lbin for that item`)
-    }
 
-    return await interaction.reply({ embeds: [exampleEmbed], ephemeral: isEphemeral })
-}
-
-function numberWithThousandsSeperators(number, seperator) {
-    if (!number) {
-        return "0";
-    }
-    var parts = number.toString().split(",");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, seperator || ",");
-    return parts.join(",");
-}
-
-async function replyFetchingDataEmbed(interaction, isEphemeral) {
-    const fetchingData = new MessageEmbed()
-        .setColor(COLOR_EMBEDED_MESSAGES)
-        .setAuthor(interaction.member.user.tag)
-        .setDescription('Fetching data...')
-        .setTimestamp()
-    return await interaction.reply({ embeds: [fetchingData], ephemeral: isEphemeral })
-}
