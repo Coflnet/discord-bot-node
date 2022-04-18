@@ -114,13 +114,13 @@ async function bidsReplyEmbed(interaction, isEphemeral, apiResponse) {
 }
 
 module.exports = {
-replyProfitEmbed,
-replyFetchingDataEmbed,
-nanErrorReplyEmbed,
-replyDaysOutOfBoundsEmbed,
-replyNoSpacesInNameEmbed,
-replyPlayerNameNotFoundOrInvalidEmbed,
-itemInputWasNotFoundEmbedReply,
-replyLowestBinEmbed,
-bidsReplyEmbed
+    replyProfitEmbed,
+    replyFetchingDataEmbed,
+    nanErrorReplyEmbed,
+    replyDaysOutOfBoundsEmbed,
+    replyNoSpacesInNameEmbed,
+    replyPlayerNameNotFoundOrInvalidEmbed,
+    itemInputWasNotFoundEmbedReply,
+    replyLowestBinEmbed,
+    bidsReplyEmbed
 }

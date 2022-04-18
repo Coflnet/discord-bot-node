@@ -3,7 +3,7 @@ const fetch = require('cross-fetch');
 const dotenv = require('dotenv')
 dotenv.config()
 
-const { 
+const {
     replyProfitEmbed,
     replyFetchingDataEmbed,
     nanErrorReplyEmbed,

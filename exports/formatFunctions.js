@@ -24,5 +24,7 @@ function numberWithThousandsSeperators(number, seperator) {
     return parts.join(",");
 }
 
-module.exports.numberWithThousandsSeperators = numberWithThousandsSeperators
-module.exports.formatToPriceToShorten = formatToPriceToShorten
+module.exports = {
+numberWithThousandsSeperators,
+formatToPriceToShorten
+}
