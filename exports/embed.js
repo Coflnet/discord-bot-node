@@ -30,7 +30,7 @@ async function replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral) {
         .setAuthor('Error!')
         .setDescription('The Name you entered was not found please check your spelling')
         .setTimestamp()
-    return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
+    return await interaction.editReply({ embeds: [embeded], ephemeral: isEphemeral })
 }
 
 async function replyFetchingDataEmbed(interaction, isEphemeral) {
@@ -80,10 +80,10 @@ async function replyLowestBinEmbed(interaction, isEphemeral, apiResponse, player
         .setAuthor('Lowest bin')
         .setDescription(`<@${userID}>`)
         .setTimestamp()
-    if (lowestBinInfo) {
+    if (playerResponse) {
         lowestBinEmbed = lowestBinEmbed.addField(`The lowest bin of ${playerResponse[0].name}`, `is **${(numberWithThousandsSeperators(apiResponse.lowest))}** second lowest bin is ${(numberWithThousandsSeperators(apiResponse.secondLowest))}`)
     } else {
-        lowestBinEmbed = lowestBinEmbed.addField('Error!', `There was no lbin for that item`)
+        playerResponse = lowestBinEmbed.addField('Error!', `There was no lbin for that item`)
     }
     return await interaction.editReply({ embeds: [lowestBinEmbed], ephemeral: isEphemeral })
 }
@@ -95,7 +95,7 @@ async function itemInputWasNotFoundEmbedReply(interaction, isEphemeral) {
         .setDescription('the item you searched up was not found please try again')
         .setTimestamp()
 
-    return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
+    return await interaction.editReply({ embeds: [embeded], ephemeral: isEphemeral })
 }
 
 async function bidsReplyEmbed(interaction, isEphemeral, apiResponse) {
@@ -108,18 +108,19 @@ async function bidsReplyEmbed(interaction, isEphemeral, apiResponse) {
         .setTimestamp()
     for (let i = 0; i < bids.length; i++) {
         let bid = bids[i]
-        exampleEmbed = exampleEmbed.addField(`${i + 1}.`, `Item-Name: ${bid.itemName} | Highest bid:  ${numberWithThousandsSeperators(bid.highestBid)} Coins | BIN: ${bid.bin}`)
+        exampleEmbed = exampleEmbed.addField(`${i + 1}.`, `**${bid.itemName}** | Highest bid:  **${numberWithThousandsSeperators(bid.highestBid)}** Coins | BIN: ${bid.bin}`)
     }
     return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral })
 }
 
-module.exports.replyProfitEmbed = replyProfitEmbed
-module.exports.replyFetchingDataEmbed = replyFetchingDataEmbed
-module.exports.nanErrorReplyEmbed = nanErrorReplyEmbed
-module.exports.replyFetchingDataEmbed = replyFetchingDataEmbed
-module.exports.replyDaysOutOfBoundsEmbed = replyDaysOutOfBoundsEmbed
-module.exports.replyNoSpacesInNameEmbed = replyNoSpacesInNameEmbed
-module.exports.replyPlayerNameNotFoundOrInvalidEmbed = replyPlayerNameNotFoundOrInvalidEmbed
-module.exports.itemInputWasNotFoundEmbedReply = itemInputWasNotFoundEmbedReply
-module.exports.replyLowestBinEmbed = replyLowestBinEmbed
-module.exports.bidsReplyEmbed = bidsReplyEmbed
+module.exports = {
+replyProfitEmbed,
+replyFetchingDataEmbed,
+nanErrorReplyEmbed,
+replyDaysOutOfBoundsEmbed,
+replyNoSpacesInNameEmbed,
+replyPlayerNameNotFoundOrInvalidEmbed,
+itemInputWasNotFoundEmbedReply,
+replyLowestBinEmbed,
+bidsReplyEmbed
+}

@@ -22,7 +22,6 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', (message) => {
-
     var text = message.content.toLowerCase();
     var nitroRegexr = text.match(nitroRegex);
     if (nitroRegexr != null) {
@@ -40,6 +39,8 @@ client.on('messageCreate', (message) => {
     if (threadCreated) {
         return;
     }
+
+    warnCommand(message);
 
     checkForSpecialMessage(message);
 
@@ -71,6 +72,21 @@ client.on('interactionCreate', async interaction => {
     }
 })
 
+async function warnCommand(message) {
+
+    if (message.type === "REPLY") {
+        if (message.content.indexOf("!warn") >= 0) {
+            let repliedTo = await message.channel.messages.fetch(message.reference.messageID);
+            console.log(message)
+            let messageArray = message.content.split()
+            console.log(messageArray)
+            messageArray = remove('!warn')
+            console.log(messageArray)
+
+            let sendToServer = (``)
+        }
+    }
+}
 
 function getClientCommands() {
 
