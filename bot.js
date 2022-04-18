@@ -40,7 +40,6 @@ client.on('messageCreate', (message) => {
         return;
     }
 
-    warnCommand(message);
 
     checkForSpecialMessage(message);
 
@@ -71,22 +70,6 @@ client.on('interactionCreate', async interaction => {
         await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
     }
 })
-
-async function warnCommand(message) {
-
-    if (message.type === "REPLY") {
-        if (message.content.indexOf("!warn") >= 0) {
-            let repliedTo = await message.channel.messages.fetch(message.reference.messageID);
-            console.log(message)
-            let messageArray = message.content.split()
-            console.log(messageArray)
-            messageArray = remove('!warn')
-            console.log(messageArray)
-
-            let sendToServer = (``)
-        }
-    }
-}
 
 function getClientCommands() {
 
