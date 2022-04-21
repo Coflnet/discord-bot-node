@@ -27,13 +27,13 @@ module.exports = {
             return replyNoSpacesInNameEmbed(interaction, isEphemeral);
         }
 
-        await replyFetchingDataEmbed(interaction, isEphemeral)
-
         let res = await fetch(`${process.env.API_ENDPOINT}/search/player/${name}`);
         let playerResponse = await res.json();
         if (playerResponse.Slug === "player_not_found") {
             return replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral);
         }
+
+        await replyFetchingDataEmbed(interaction, isEphemeral)
 
         let response = await fetch(`${process.env.API_ENDPOINT}/player/${playerResponse[0].uuid}/bids`);
         let apiResponse = await response.json();

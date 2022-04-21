@@ -30,7 +30,7 @@ async function replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral) {
         .setAuthor('Error!')
         .setDescription('The Name you entered was not found please check your spelling')
         .setTimestamp()
-    return await interaction.editReply({ embeds: [embeded], ephemeral: isEphemeral })
+    return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
 }
 
 async function replyFetchingDataEmbed(interaction, isEphemeral) {
@@ -95,7 +95,7 @@ async function itemInputWasNotFoundEmbedReply(interaction, isEphemeral) {
         .setDescription('the item you searched up was not found please try again')
         .setTimestamp()
 
-    return await interaction.editReply({ embeds: [embeded], ephemeral: isEphemeral })
+    return await interaction.reply({ embeds: [embeded], ephemeral: isEphemeral })
 }
 
 async function bidsReplyEmbed(interaction, isEphemeral, apiResponse) {
