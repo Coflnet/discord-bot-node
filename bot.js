@@ -101,6 +101,7 @@ function checkForThreadCreation(message) {
 
     if (message.channel.id === process.env.CHANNEL_ID_SUGGESTIONS) {
         createAnswerThread(message, 'Suggestion Idea', 'To help someone with their suggestion', thread => { sendAnswer(thread, text) });
+        createSuggestionVote(message);
         return true;
     }
     return false;
@@ -134,6 +135,11 @@ function createAnswerThread(message, name, reason, callback) {
     }).then(thread => {
         callback(thread);
     })
+}
+
+function createSuggestionVote(message) {
+    message.react('👍');
+    message.react('👎');
 }
 
 function sendAnswer(thread, text) {

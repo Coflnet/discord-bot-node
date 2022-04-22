@@ -98,6 +98,13 @@ async function nanErrorReplyEmbed(isEphemeral, interaction, playerData) {
     return await interaction.editReply({ embeds: [errorReply], ephemeral: isEphemeral })
 }
 
+function checkIfProfit(worstFlip){
+    if(worstFlip.profit > 0){
+        return `total profit being`
+    }
+    return `total loss being`
+}
+
 async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipData, isEphemeral) {
     let worstFlip = flipData.flips[flipData.flips.length -1]
     let bestFlip = flipData.flips[0]
