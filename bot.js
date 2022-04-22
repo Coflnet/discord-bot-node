@@ -22,7 +22,6 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', (message) => {
-
     var text = message.content.toLowerCase();
     var nitroRegexr = text.match(nitroRegex);
     if (nitroRegexr != null) {
@@ -40,6 +39,7 @@ client.on('messageCreate', (message) => {
     if (threadCreated) {
         return;
     }
+
 
     checkForSpecialMessage(message);
 
@@ -68,7 +68,6 @@ client.on('interactionCreate', async interaction => {
         await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
     }
 })
-
 
 function getClientCommands() {
 
