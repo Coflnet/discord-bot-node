@@ -150,7 +150,6 @@ function sendAnswer(thread, text) {
 
 function getResponseToQuestion(question, message) {
     if (message.content.length >= 61){
-        message.delete();
         return
     }
     for (let i = 0; i < answers.length; i++) {
