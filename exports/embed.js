@@ -51,7 +51,22 @@ async function nanErrorReplyEmbed(isEphemeral, interaction, playerData) {
     return await interaction.editReply({ embeds: [errorReply], ephemeral: isEphemeral })
 }
 
+function getProfitOrLossString(worstFlip) {
+    if (worstFlip.profit > 0) {
+        return `total profit being`
+    }
+    return `total loss being`
+}
+
+function getTotalProfitString(flipData, days) {
+    if (flipData.totalProfit > 0) {
+        return  `**${formatToPriceToShorten(flipData.totalProfit, 0)}** in the last ${days} days`
+    }
+    return  `**Nothing** in the last ${days} days`
+}
+
 async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipData, isEphemeral) {
+    let worstFlip = flipData.flips[flipData.flips.length - 1]
     let bestFlip = flipData.flips[0]
     const userID = (interaction.member.user.id)
     let profitEmbed = new MessageEmbed()
@@ -60,14 +75,14 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipD
         .setAuthor('Flipping Profit')
         .setDescription(`<@${userID}>`)
         .setThumbnail(`https://crafatar.com/renders/head/${playerUUID}`)
-        .addField(`${playerName} has made`, `**${formatToPriceToShorten(flipData.totalProfit, 0)}** in the last ${days} days`)
+        .addField(`${playerName} has made`, getTotalProfitString(flipData, days))
         .setTimestamp()
-    if (bestFlip) {
-        profitEmbed = profitEmbed.addField(`**The highest profit flip was**`, `${bestFlip.itemName} bought for ${formatToPriceToShorten(bestFlip.pricePaid)} sold for ${formatToPriceToShorten(bestFlip.soldFor)} profit being **${formatToPriceToShorten(bestFlip.profit)}**`)
-    } else {
+    if (flipData.flips.length === 0) {
         profitEmbed = profitEmbed.addField('Error!', `There where no flips found :frowning2:`)
+    } else {
+        profitEmbed = profitEmbed.addField(`The highest profit flip was`, `${bestFlip.itemName} bought for ${formatToPriceToShorten(bestFlip.pricePaid)} sold for ${formatToPriceToShorten(bestFlip.soldFor)} profit being **${formatToPriceToShorten(bestFlip.profit)}**`)
+        profitEmbed = profitEmbed.addField(`**Worst Buy -> Sell**`, `${worstFlip.itemName} bought for ${formatToPriceToShorten(worstFlip.pricePaid)} sold for ${(formatToPriceToShorten(worstFlip.soldFor))} ${getProfitOrLossString(worstFlip)} **${formatToPriceToShorten(worstFlip.profit)}**`)
     }
-
     return await interaction.editReply({ embeds: [profitEmbed], ephemeral: isEphemeral })
 }
 
