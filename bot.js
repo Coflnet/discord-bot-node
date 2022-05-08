@@ -106,6 +106,19 @@ function checkForThreadCreation(message) {
     return false;
 }
 
+// utility function to check if a one-word message is a valid url
+function isValidHttpUrl(string) {
+    let url;
+
+    try {
+        url = new URL(string);
+    } catch (_) {
+        return false;
+    }
+
+    return url.protocol === "http:" || url.protocol === "https:";
+}
+
 
 function checkForDelete(message) {
     if (message.content.toLowerCase().indexOf("@everyone") >= 0) {
@@ -115,7 +128,7 @@ function checkForDelete(message) {
     // dev, mod, helper, half-helper, tfm staff
     const exemptRoles = ["669258959495888907", "869942341442600990", "933807456151285770", "893869139129692190", "941738849808298045"]
     // check if the message was in a server (has member attribute)
-    if (message.content.toLowerCase().split(" ").length === 1 && message.member != null) {
+    if (message.content.toLowerCase().split(" ").length === 1 && message.member != null && !isValidHttpUrl(message.content)) {
         // for role in member roles, if the role id is exempt, don't do this
         for (const role of message.member.roles.cache.values()) {
             if (exemptRoles.includes(role.id)) {
