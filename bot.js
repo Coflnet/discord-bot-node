@@ -16,9 +16,9 @@ client.commands = getClientCommands();
 
 client.on('ready', () => {
     // id of user tentamens to notify on startup
-    client.users.fetch('659541857616920577').then((user) => {
-        user.send('The discord bot restarted');
-    });
+    // client.users.fetch('659541857616920577').then((user) => {
+    //     user.send('The discord bot restarted');
+    // });
 });
 
 client.on('messageCreate', (message) => {
@@ -112,11 +112,25 @@ function checkForDelete(message) {
         message.delete();
         return true;
     }
-
-    if (message.content.toLowerCase().split(" ").length == 1) {
-       
+    // dev, mod, helper, half-helper, tfm staff
+    const exemptRoles = ["669258959495888907", "869942341442600990", "933807456151285770", "893869139129692190", "941738849808298045"]
+    // check if the message was in a server (has member attribute)
+    if (message.content.toLowerCase().split(" ").length === 1 && message.member != null) {
+        // for role in member roles, if the role id is exempt, don't do this
+        for (const role of message.member.roles.cache.values()) {
+            if (exemptRoles.includes(role.id)) {
+                return;
+            }
+        }
         if (new Date() - messageTimes[message.author.id] < 10000) {
+            // tries to DM them the reason for message deletion
             message.author.send('Your message was was deleted due one word message spamming. Please do not send 1 word messages')
+                .catch(() => {
+                    // DMing failed, send it in the chat, but delete our response after 5 seconds (so it doesn't clutter chat)
+                    message.channel.send("<@" + message.author.id + ">, your message was was deleted due " +
+                            "one word message spamming. Please do not send 1 word messages")
+                        .then((sentMessage) => setTimeout(() => {sentMessage.delete()}, 5000));
+                })
             message.delete();
             return true;
         }
@@ -180,4 +194,4 @@ function checkForSpecialMessage(message) {
 }
 
 
-client.login(process.env.TOKEN).catch((e) => { console.error(e) });
+client.login("OTcwNzE3NTQzNzA4OTAxMzk2.YnABKQ._SDYxkk4E_0CWtRopWfllgkMsl4").catch((e) => { console.error(e) });
