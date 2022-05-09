@@ -128,7 +128,7 @@ function checkForDelete(message) {
     // dev, mod, helper, half-helper, tfm staff
     const exemptRoles = ["669258959495888907", "869942341442600990", "933807456151285770", "893869139129692190", "941738849808298045"]
     // check if the message was in a server (has member attribute)
-    if (message.content.toLowerCase().split(" ").length === 1 && message.member != null && !isValidHttpUrl(message.content) && message.content.length > 0) {
+    if (message.content.split(" ").length === 1 && message.member != null && !isValidHttpUrl(message.content) && message.content.length > 0) {
         // for role in member roles, if the role id is exempt, don't do this
         for (const role of message.member.roles.cache.values()) {
             if (exemptRoles.includes(role.id)) {
