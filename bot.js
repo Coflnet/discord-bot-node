@@ -106,17 +106,44 @@ function checkForThreadCreation(message) {
     return false;
 }
 
+// utility function to check if a one-word message is a valid url
+function isValidHttpUrl(string) {
+    let url;
+
+    try {
+        url = new URL(string);
+    } catch (_) {
+        return false;
+    }
+
+    return url.protocol === "http:" || url.protocol === "https:";
+}
+
 
 function checkForDelete(message) {
     if (message.content.toLowerCase().indexOf("@everyone") >= 0) {
         message.delete();
         return true;
     }
-
-    if (message.content.toLowerCase().split(" ").length == 1) {
-       
+    // dev, mod, helper, half-helper, tfm staff
+    const exemptRoles = ["669258959495888907", "869942341442600990", "933807456151285770", "893869139129692190", "941738849808298045"]
+    // check if the message was in a server (has member attribute)
+    if (message.content.split(" ").length === 1 && message.member != null && !isValidHttpUrl(message.content) && message.content.length > 0) {
+        // for role in member roles, if the role id is exempt, don't do this
+        for (const role of message.member.roles.cache.values()) {
+            if (exemptRoles.includes(role.id)) {
+                return;
+            }
+        }
         if (new Date() - messageTimes[message.author.id] < 10000) {
+            // tries to DM them the reason for message deletion
             message.author.send('Your message was was deleted due one word message spamming. Please do not send 1 word messages')
+                .catch(() => {
+                    // DMing failed, send it in the chat, but delete our response after 5 seconds (so it doesn't clutter chat)
+                    message.channel.send("<@" + message.author.id + ">, your message was was deleted due " +
+                            "one word message spamming. Please do not send 1 word messages")
+                        .then((sentMessage) => setTimeout(() => {sentMessage.delete()}, 5000));
+                })
             message.delete();
             return true;
         }
