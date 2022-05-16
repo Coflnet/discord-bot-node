@@ -132,7 +132,7 @@ async function bidsReplyEmbed(interaction, isEphemeral, apiResponse) {
     for (let i = 0; i < apiResponse.length; i++) {
         exampleEmbed = exampleEmbed.addField(
             `${i + 1}.`,
-            `**${apiResponse.itemName}** | Highest bid:  **${numberWithThousandsSeperators(apiResponse.highestBid)}** Coins | BIN: ${apiResponse.bin}`
+            `**${apiResponse[i].itemName}** | Highest bid:  **${numberWithThousandsSeperators(apiResponse[i].highestBid)}** Coins | BIN: ${apiResponse[i].bin}`
         )
     }
     return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral })
