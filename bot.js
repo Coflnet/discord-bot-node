@@ -43,7 +43,7 @@ client.on('messageCreate', (message) => {
 
     checkForSpecialMessage(message);
 
-    let answer = getResponseToQuestion(message.content.toLowerCase(), message);
+    let answer = getResponseToQuestion(message.content.toLowerCase());
     if (answer) {
         message.channel.send(answer);
     }
@@ -175,8 +175,8 @@ function sendAnswer(thread, text) {
     }
 }
 
-function getResponseToQuestion(question, message) {
-    if (message.content.length >= 61){
+function getResponseToQuestion(question) {
+    if (question && question.length >= 61){
         return
     }
     for (let i = 0; i < answers.length; i++) {
