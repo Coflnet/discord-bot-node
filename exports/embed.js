@@ -55,8 +55,6 @@ function getTotalProfitString(flipData, days) {
 }
 
 async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipData, isEphemeral) {
-    let worstFlip = flipData.flips[flipData.flips.length - 1]
-    let bestFlip = flipData.flips[0]
     let profitEmbed = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setURL('https://discord.js.org/')
@@ -67,9 +65,11 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipD
         .addField(`${playerName} has made`, getTotalProfitString(flipData, days))
         .setTimestamp()
     // checks if there are flips or not
-    if (flipData.flips.length === 0) {
+    if (!flipData || !flipData.flips || flipData.flips.length === 0) {
         profitEmbed = profitEmbed.addField('Error!', `There where no flips found :frowning2:`)
     } else {
+        let worstFlip = flipData.flips[flipData.flips.length - 1]
+        let bestFlip = flipData.flips[0]
         // adds the highest profit and lowest profit flips to the embed
         profitEmbed = profitEmbed.addField(
             `The highest profit flip was`,
