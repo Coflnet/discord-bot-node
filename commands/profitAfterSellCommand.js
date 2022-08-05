@@ -29,21 +29,27 @@ module.exports = {
         let hypixelPlayerResponse = await response.json()
 
         try {
+            // get the cofl auction data about the auctions from the hypixel request
             let auctionDetailsList = await fetchApiRequests(
                 hypixelPlayerResponse.auctions.map(auction => fetch(`${process.env.API_ENDPOINT}/auction/${auction.uuid}`))
             )
+            // puts the end dates of these auctions into var
             auctionDetailsList = auctionDetailsList.filter(auction => new Date(auction.end) > new Date())
-
+            // get all past sells of the auctions from the "auctionDetailsList"
             let soldAuctions = await fetchApiRequests(
                 auctionDetailsList.map(auction => fetch(`${process.env.API_ENDPOINT}/auctions/uid/${auction.flatNbt.uid}/sold`))
             )
-            soldAuctions.forEach(auctions => {
-                auctions = auctions.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+            // sorts the auctions by their timestamps
+            soldAuctions.sort(function (x, y){
+                return y.timestamp - x.timestamp
             })
 
+    
+            console.log(soldAuctions[0])
             auctionDetailsList.forEach((auctionDetails, index) => {
-                auctionDetails.lastSoldAuctionUUID = soldAuctions[index].length > 0 ? soldAuctions[index][0].uuid : undefined
+                auctionDetails.lastSoldAuctionUUID = soldAuctions[index] && soldAuctions[index].length > 0 ? soldAuctions[index][0].uuid : undefined
             })
+            
             auctionDetailsList = auctionDetailsList.filter(auctionDetails => !!auctionDetails.lastSoldAuctionUUID)
 
             let soldAuctionsDetails = await fetchApiRequests(
