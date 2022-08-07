@@ -37,6 +37,9 @@ module.exports = {
             let soldAuctions = await fetchApiRequests(
                 auctionDetailsList.map(auction => fetch(`${process.env.API_ENDPOINT}/auctions/uid/${auction.flatNbt.uid}/sold`))
             )
+            soldAuctions.forEach(auctions => {
+                auctions.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
+            })
 
             auctionDetailsList.forEach((auctionDetails, index) => {
                 if (!soldAuctions[index]) {
