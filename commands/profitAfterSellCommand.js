@@ -29,7 +29,6 @@ module.exports = {
         let hypixelPlayerResponse = await response.json()
 
         try {
-            // get the cofl auction data about the auctions from the hypixel request
             let auctionDetailsList = await fetchApiRequests(
                 hypixelPlayerResponse.auctions.map(auction => fetch(`${process.env.API_ENDPOINT}/auction/${auction.uuid}`))
             )
@@ -39,13 +38,11 @@ module.exports = {
             let soldAuctions = await fetchApiRequests(
                 auctionDetailsList.map(auction => fetch(`${process.env.API_ENDPOINT}/auctions/uid/${auction.flatNbt.uid}/sold`))
             )
-            // sorts the auctions by their timestamps
+
             soldAuctions.sort(function (x, y){
                 return y.timestamp - x.timestamp
             })
 
-    
-            console.log(soldAuctions[0])
             auctionDetailsList.forEach((auctionDetails, index) => {
                 auctionDetails.lastSoldAuctionUUID = soldAuctions[index] && soldAuctions[index].length > 0 ? soldAuctions[index][0].uuid : undefined
             })
