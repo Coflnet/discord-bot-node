@@ -15,7 +15,7 @@
             "called",
             "ct"
         ],
-        "answer": ":point_right: Just download <https://www.chattriggers.com/> and ingame type /ct import PricePaid"
+        "answer": ":point_right: In-game just do /cofl lore and click 'PRICE_PAID'"
     },
     {
         "question": [
@@ -137,21 +137,6 @@
     },
     {
         "question": [
-            "whats",
-            "ferrum"
-        ],
-        "blacklist": [
-            "owner",
-            "endorphin",
-            "autobuy",
-            "isnt",
-            "public",
-            "tfm"
-        ],
-        "answer": "It is a private flipper Made by <@415201450336059392>"
-    },
-    {
-        "question": [
             "what",
             "ferrum"
         ],
@@ -181,7 +166,7 @@
         "question": [
             "is",
             "cofl",
-            "rat?"
+            "rat"
         ],
         "blacklist": [
             "doesnt",
@@ -207,25 +192,7 @@
             "isn't",
             "ratio"
         ],
-        "answer": "No, Cofl is not ratted, you are welcome to decompile the mod from <#890682907889373257> and see for yourself."
-    },
-    {
-        "question": [
-            "this",
-            "rat?"
-        ],
-        "blacklist": [
-            "doesnt",
-            "which",
-            "if",
-            "isnt",
-            "isn't",
-            "ratio",
-            "tfm",
-            "cofl",
-            "what"
-        ],
-        "answer": "No, Cofl is not ratted, you are welcome to decompile the mod from <#890682907889373257> and see for yourself."
+        "answer": "No, Cofl is not ratted, you are welcome to decompile the mod from <#890682907889373257> and see for yourself. Or use https://isthisarat.com"
     },
     {
         "question": [
@@ -262,14 +229,14 @@
     {
         "question": [
             "can",
+            "i",
             "have",
             "flipper role"
         ],
         "blacklist": [
-            "dont",
-            "get"
+            "you"
         ],
-        "answer": "If you want the flipper role please dm staff with proof/your email and they will give you the role."
+        "answer": "Theres 2 things you have to make sure you have done\n1. Make sure your verified on Coflnet (search your name at in the search bar at the top of the website <https://sky.coflnet.com> and then if you are not verified click 'You? Claim account.')\n2. Make sure your discord account is linked to your hypixel account https://youtu.be/Gw1F7cYt_aQ?t=11"
     },
     {
         "question": [
@@ -282,6 +249,17 @@
             "get"
         ],
         "answer": "If you want the flipper role please dm staff with proof/your email and they will give you the role."
+    },
+    {
+        "question": [
+            "can",
+            "i",
+            "get",
+            "flipper role"
+        ],
+        "blacklist": [
+            "you"
+        ],
+        "answer": "Theres 2 things you have to make sure you have done\n1. Make sure your verified on Coflnet (search your name at in the search bar at the top of the website <https://sky.coflnet.com/> and then if you are not verified click 'You? Claim account.')\n2. Make sure your discord account is linked to your hypixel account https://youtu.be/Gw1F7cYt_aQ?t=11"
     }
-    
 ]
