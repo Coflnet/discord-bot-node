@@ -32,7 +32,6 @@ module.exports = {
             let auctionDetailsList = await fetchApiRequests(
                 hypixelPlayerResponse.auctions.map(auction => fetch(`${process.env.API_ENDPOINT}/auction/${auction.uuid}`))
             )
-            // puts the end dates of these auctions into var
             auctionDetailsList = auctionDetailsList.filter(auction => new Date(auction.end) > new Date())
             // get all past sells of the auctions from the "auctionDetailsList"
             let soldAuctions = await fetchApiRequests(
