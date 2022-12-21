@@ -89,7 +89,8 @@ function checkForThreadCreation(message) {
         createAnswerThread(message, 'Support Help', 'Needed a separate thread for moderation', thread => { sendAnswer(thread, text) });
         thread.send("A new support ticket was made <@933807456151285770> <@893869139129692190>")
         return true;
-    })
+    });
+    }
 
     if (message.channel.id === process.env.CHANNEL_ID_BUGREPORT) {
         createAnswerThread(message, 'Bug Help', 'help with bug', thread => {
