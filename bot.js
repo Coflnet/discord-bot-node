@@ -87,7 +87,7 @@ function checkForThreadCreation(message) {
     let text = message.content.toLowerCase();
     if (message.channel.id === process.env.CHANNEL_ID_SUPPORT) {
         createAnswerThread(message, 'Support Help', 'Needed a separate thread for moderation', thread => { sendAnswer(thread, text) 
-        thread.send("A new support ticket was made <@933807456151285770> <@893869139129692190>")
+        thread.send("A new support ticket was made <@&933807456151285770> <@&893869139129692190>")
         });
         return true;
     }
