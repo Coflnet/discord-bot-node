@@ -68,6 +68,7 @@ async function replyProfitEmbed(interaction, playerUUID, playerName, days, flipD
     if (!flipData || !flipData.flips || flipData.flips.length === 0) {
         profitEmbed = profitEmbed.addField('Error!', `There where no flips found :frowning2:`)
     } else {
+        flipData.flips = flipData.flips.sort((a, b) => b.profit - a.profit)
         let worstFlip = flipData.flips[flipData.flips.length - 1]
         let bestFlip = flipData.flips[0]
         // adds the highest profit and lowest profit flips to the embed
