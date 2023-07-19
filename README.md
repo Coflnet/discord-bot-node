@@ -28,3 +28,4 @@ The ID of the bot-commands channel
 
 ### API_ENDPOINT
 The Adress of the API-Endpoint
+
