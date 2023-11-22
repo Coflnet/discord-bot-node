@@ -25,52 +25,76 @@ module.exports = {
 
         await replyFetchingDataEmbed(interaction, isEphemeral)
         // Fetches the most recent auctions plus all active
-        let response = await fetch(`https://api.hypixel.net/skyblock/auction?key=${process.env.API_KEY}&player=${playerSearchResponse[0].uuid}`)
-        let hypixelPlayerResponse = await response.json()
 
-        try {
-            let auctionDetailsList = await fetchApiRequests(
-                hypixelPlayerResponse.auctions.map(auction => fetch(`${process.env.API_ENDPOINT}/auction/${auction.uuid}`))
-            )
-            // puts the end dates of these auctions into var
-            auctionDetailsList = auctionDetailsList.filter(auction => new Date(auction.end) > new Date())
-            // get all past sells of the auctions from the "auctionDetailsList"
-            let soldAuctions = await fetchApiRequests(
-                auctionDetailsList.map(auction => fetch(`${process.env.API_ENDPOINT}/auctions/uid/${auction.flatNbt.uid}/sold`))
-            )
-            soldAuctions.forEach(auctions => {
-                auctions.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
-            })
+        let auctions = []
 
-            auctionDetailsList.forEach((auctionDetails, index) => {
-                if (!soldAuctions[index]) {
-                    auctionDetails.lastSoldAuctionUUID = undefined
-                    return
-                }
-                auctionDetails.lastSoldAuctionUUID = soldAuctions[index] && soldAuctions[index].length > 0 ? soldAuctions[index][0].uuid : undefined
-            })
+        for (let i = 0; i < 10; i++) {    
+            let data = await fetch(`${process.env.API_ENDPOINT}/player/${playerSearchResponse[0].uuid}/auctions?page=${i}`)
+            data = await data.json()
             
-            auctionDetailsList = auctionDetailsList.filter(auctionDetails => !!auctionDetails.lastSoldAuctionUUID)
-
-            let soldAuctionsDetails = await fetchApiRequests(
-                auctionDetailsList.map(auctionDetails => fetch(`${process.env.API_ENDPOINT}/auction/${auctionDetails.lastSoldAuctionUUID}`))
-            )
-
-            let totalProfit = 0
-            for (let i = 0; i < soldAuctionsDetails.length; i++) {
-                auctionDetailsList[i].purchasePrice = soldAuctionsDetails[i].startingBid
-                auctionDetailsList[i].itemName = soldAuctionsDetails[i].itemName
-                totalProfit += Number(auctionDetailsList[i].startingBid - soldAuctionsDetails[i].startingBid)
+            if (data.length === 0) {
+                break
             }
-
-            let player = {
-                uuid: playerSearchResponse[0].uuid,
-                name: playerSearchResponse[0].name
-            }
-            return profitAferSellEmbedReply(interaction, isEphemeral, player, auctionDetailsList, totalProfit)
-        } catch (error) {
-            console.error(error)
+            auctions = auctions.concat(data)
         }
+
+        currentDate = new Date()
+        let activeAuctions = []
+
+        for (let i = 0; i < auctions.length; i++) {
+            const item = auctions[i];
+            if (currentDate > new Date(item.end)){
+                continue
+            }            
+            activeAuctions = activeAuctions.concat(item)
+        }
+
+        let auctionDetails =[]
+        for (let i = 0; i < activeAuctions.length; i++) {
+            const item = activeAuctions[i];
+            let data = await fetch(`${process.env.API_ENDPOINT}/auction/${item.auctionId}`)
+            data = await data.json()
+            auctionDetails = auctionDetails.concat(data)
+        }
+        let removeItems = []
+        
+        pastSellsOfItem = []
+        for (let i = 0; i < auctionDetails.length; i++) {
+            const item = auctionDetails[i];
+            let response = await fetch(`${process.env.API_ENDPOINT}/auctions/uid/${item.flatNbt["uid"]}/sold`)
+            response = await response.json()
+            if (response.length === 0) {
+                removeItems.push([])
+                continue
+            };
+            pastSellsOfItem.push(response)
+        }
+
+        for (let i = 0; i < pastSellsOfItem.length; i++) {
+            const item = pastSellsOfItem[i];
+            pastSellsOfItem[i] = item.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp))
+        }
+
+        // filters of the items in remove items from auctionDetails
+        auctionDetails = auctionDetails.filter((_, i) => !removeItems.includes(i))
+        
+        let itemsPreviosSellValue = []
+        for (let i = 0; i < pastSellsOfItem.length; i++) {
+            const item = pastSellsOfItem[i];
+            if (item.length === 0){
+                continue
+            }
+            let response = await fetch(`${process.env.API_ENDPOINT}/auction/${item[0].uuid}`)
+            response = await response.json()
+            itemsPreviosSellValue = itemsPreviosSellValue.concat(response.highestBidAmount)
+        }
+
+        let totalProfit = 0
+        for (let i = 0; i < itemsPreviosSellValue.length; i++) {
+            const item = itemsPreviosSellValue[i];
+            totalProfit += auctionDetails[i].startingBid - item
+        }
+        return profitAferSellEmbedReply(interaction, isEphemeral, playerSearchResponse, totalProfit)
     }
 }
 
@@ -84,3 +108,4 @@ async function fetchApiRequests(fetchPromises) {
     })
     return Promise.all(promises)
 }
+
