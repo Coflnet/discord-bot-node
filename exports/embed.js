@@ -139,23 +139,16 @@ async function bidsReplyEmbed(interaction, isEphemeral, apiResponse) {
     return await interaction.editReply({ embeds: [exampleEmbed], ephemeral: isEphemeral })
 }
 
-async function profitAferSellEmbedReply(interaction, isEphemeral, player, auctionDetailsList, totalProfit) {
+async function profitAferSellEmbedReply(interaction, isEphemeral, player,totalProfit) {
     let profitAfterSellEmbed = new MessageEmbed()
         .setColor(COLOR_EMBEDED_MESSAGES)
         .setAuthor('Profit after sell')
         // command users id
         .setDescription(`<@${interaction.member.user.id}>`)
-        .setThumbnail(`https://crafatar.com/renders/body/${player.uuid}`)
-        .addField(`${player.name} ${totalProfit >= 0 ? 'will **make**' : 'will **lose**'}`, `**${formatToPriceToShorten(totalProfit)}** from their auctions`)
+        .setThumbnail(`https://crafatar.com/renders/body/${player[0].uuid}`)
+        .addField(`${player[0].name} ${totalProfit >= 0 ? 'will **make**' : 'will **lose**'}`, `**${formatToPriceToShorten(totalProfit)}** from their auctions`)
         .setTimestamp()
-    for (let i = 0; i < auctionDetailsList.length; i++) {
-        profitAferSellEmbed = profitAfterSellEmbed.addField(
-            `${auctionDetailsList[i].itemName} was bought for`,
-            `**${formatToPriceToShorten(auctionDetailsList[i].purchasePrice)}** and it will sell for **${formatToPriceToShorten(
-                auctionDetailsList[i].startingBid
-            )}**`
-        )
-    }
+
     return await interaction.editReply({ embeds: [profitAfterSellEmbed], ephemeral: isEphemeral })
 }
 

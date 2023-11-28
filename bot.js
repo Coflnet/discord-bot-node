@@ -209,5 +209,4 @@ function checkForSpecialMessage(message) {
     }
 }
 
-
 client.login(process.env.TOKEN).catch((e) => { console.error(e) });
