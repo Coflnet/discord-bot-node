@@ -94,7 +94,7 @@ function checkForThreadCreation(message) {
 
 
     if (message.channel.id === process.env.CHANNEL_ID_BUGREPORT) {
-        createAnswerThread(message, 'Bug Help', 'help with bug', thread => {
+        createAnswerThread(message, ` ${message.author.username} Bug Help`, 'help with bug', thread => {
             thread.send("Thank you for making a ticket\nPlease state the below\n- What you did\n- What you intended to do\n- what happened (even better if you take a screenshot/video of it\n- What you expected\nTry to be as precise and complete as possible. (Its faster to read some duplicate text than to ask you something)\nIf you use the mod please also use /cofl report (optional message) to easily create a report.)");
             sendAnswer(thread, text);
         });
