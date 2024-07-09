@@ -38,7 +38,7 @@ module.exports = {
             auctions = auctions.concat(data)
         }
 
-        currentDate = new Date()
+        let currentDate = new Date()
         let activeAuctions = []
 
         for (let i = 0; i < auctions.length; i++) {
@@ -58,7 +58,7 @@ module.exports = {
         }
         let removeItems = []
         
-        pastSellsOfItem = []
+        let pastSellsOfItem = []
         for (let i = 0; i < auctionDetails.length; i++) {
             const item = auctionDetails[i];
             let response = await fetch(`${process.env.API_ENDPOINT}/auctions/uid/${item.flatNbt["uid"]}/sold`)
@@ -66,19 +66,23 @@ module.exports = {
             if (response.length === 0) {
                 removeItems.push([])
                 continue
-            };
+            }
             pastSellsOfItem.push(response)
         }
 
         for (let i = 0; i < pastSellsOfItem.length; i++) {
             const item = pastSellsOfItem[i];
+            if (!item.sort) {
+                pastSellsOfItem[i] = []
+                continue;
+            }
             pastSellsOfItem[i] = item.sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp))
         }
 
         // filters of the items in remove items from auctionDetails
         auctionDetails = auctionDetails.filter((_, i) => !removeItems.includes(i))
         
-        let itemsPreviosSellValue = []
+        let itemsPreviousSellValue = []
         for (let i = 0; i < pastSellsOfItem.length; i++) {
             const item = pastSellsOfItem[i];
             if (item.length === 0){
@@ -86,26 +90,14 @@ module.exports = {
             }
             let response = await fetch(`${process.env.API_ENDPOINT}/auction/${item[0].uuid}`)
             response = await response.json()
-            itemsPreviosSellValue = itemsPreviosSellValue.concat(response.highestBidAmount)
+            itemsPreviousSellValue = itemsPreviousSellValue.concat(response.highestBidAmount)
         }
 
         let totalProfit = 0
-        for (let i = 0; i < itemsPreviosSellValue.length; i++) {
-            const item = itemsPreviosSellValue[i];
+        for (let i = 0; i < itemsPreviousSellValue.length; i++) {
+            const item = itemsPreviousSellValue[i];
             totalProfit += auctionDetails[i].startingBid - item
         }
         return profitAferSellEmbedReply(interaction, isEphemeral, playerSearchResponse, totalProfit)
     }
 }
-
-async function fetchApiRequests(fetchPromises) {
-    let responses = await Promise.all(fetchPromises)
-    let promises = []
-    responses.forEach(res => {
-        if (res.status < 400 && res.status !== 204) {
-            promises.push(res.json())
-        }
-    })
-    return Promise.all(promises)
-}
-
