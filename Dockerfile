@@ -1,4 +1,4 @@
-FROM node:16-alpine3.11
+FROM registry.suse.com/bci/nodejs:20 as base
 
 COPY package*.json .
 
