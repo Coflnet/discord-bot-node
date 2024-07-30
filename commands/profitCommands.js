@@ -45,7 +45,10 @@ module.exports = {
             return replyPlayerNameNotFoundOrInvalidEmbed(interaction, isEphemeral);
         }
         await replyFetchingDataEmbed(interaction, isEphemeral);
-        let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}?days=${days}`);
+        let end = new Date();
+        let start = new Date(end);
+        start.setDate(start.getDate() - days);
+        let response = await fetch(`${process.env.API_ENDPOINT}/flip/stats/player/${playerResponse[0].uuid}?start=${start.toISOString()}&end=${end.toISOString()}`);
 
         let flipData = await response.json();
 
